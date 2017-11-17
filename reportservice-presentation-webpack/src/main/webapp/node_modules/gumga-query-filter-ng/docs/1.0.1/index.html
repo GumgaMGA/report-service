@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-query-filter-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+    <!--<link rel="stylesheet" href="https://gumga.github.io/layout/dist/gumga-layout.css">-->
+
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-query-filter-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-6">
+          <h2>Descrição</h2>
+          <p>O componente gumga-query-filter-ng é utilizado para executar pesquisas simples ou avançadas. Na busca simples pode escolher quais campos serão pesquisados pelo termo de entrada, já na pesquisa avançada, você pode adicionar tipos aos campos e concatar outros campos intercalando com operadores "E" ou "OU" entre cada um. Após query montada, o componente gera um hql que é enviado ao servidor </p>
+        </div>
+        <div class="col-xs-6">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-query-filter-ng --save
+
+// bower
+bower install gumga-query-filter-ng --save
+
+// HTML
+&lt;script src="node_modules/gumga-query-filter-ng/dist/gumga-query-filter.min.js">&lt;/script>
+// ou
+&lt;script src="bower_components/gumga-query-filter-ng/dist/gumga-query-filter.min.js">&lt;/script>
+</code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Usando
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6">
+              <gumga-query search="pessoas.methods.search(field,param)" advanced-search="pessoas.methods.advancedSearch(param)" search-text="Pesquisar"
+                saved-filters="pessoas.methods.getQuery(page)" save-query="pessoas.methods.postQuery(query, name)">
+                <search-field field="name" label="Nome"></search-field>
+                <search-field field="age" label="Idade" select="true"></search-field>
+                <advanced-search-field type="string" label="Nome" field="nome"></advanced-search-field>
+                <advanced-search-field type="number" label="Idade" field="idade"></advanced-search-field>
+                <advanced-search-field type="float" label="Peso" field="peso"></advanced-search-field>
+                <advanced-search-field type="money" label="Preço" field="preco"></advanced-search-field>
+                <advanced-search-field type="cpf" label="CPF" field="cpf"></advanced-search-field>
+              </gumga-query>
+            </div>
+            <div class="col-xs-6">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#html" aria-controls="html" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation"><a href="#js" aria-controls="js" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="html">
+                  <pre><code class="prettyprint" ng-non-bindable>&lt;gumga-query
+  search-text="Pesquisar"
+  search="pessoas.methods.search(field,param)"
+  advanced-search="pessoas.methods.advancedSearch(param)"
+  saved-filters="pessoas.methods.getQuery(page)"
+  save-query="pessoas.methods.postQuery(query, name)">
+  &lt;search-field field="name" label="Nome">&lt;/search-field>
+  &lt;search-field field="age" label="Idade" select="true">&lt;/search-field>
+  &lt;advanced-search-field type="string" label="Nome" field="nome">&lt;/advanced-search-field>
+  &lt;advanced-search-field type="number" label="Idade" field="idade">&lt;/advanced-search-field>
+  &lt;advanced-search-field type="float" label="Peso" field="peso">&lt;/advanced-search-field>
+  &lt;advanced-search-field type="money" label="Preço" field="preco">&lt;/advanced-search-field>
+  &lt;advanced-search-field type="cpf" label="CPF" field="cpf">&lt;/advanced-search-field>
+&lt;/gumga-query></code></pre>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="js">
+                  <pre><code class="prettyprint">angular
+  .module('app', ['ui.bootstrap', 'gumga.rest', 'gumga.controller', 'gumga.genericfilter', 'gumga.queryfilter'])
+  .controller('Ctrl', ['gumgaController', 'GumgaRest', '$scope', '$http', function (gumgaController, GumgaRest, $scope, $http) {
+    var PessoaService = new GumgaRest('host-api');
+    gumgaController.createRestMethods($scope, PessoaService, 'pessoas');
+    $scope.pessoas.methods.get();
+
+    $scope.simple = function (field, param) {
+      console.info('GumgaQuery', 'Field: ' + field + ', Valor:' + param)
+    }
+
+    $scope.advanced = function (value) {
+      console.info('GumgaQuery', 'Value: ', value)
+    }
+  }])</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Atributos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Parâmetro</th>
+              <th>Tipo</th>
+              <th>Requerido</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>search</strong></td>
+              <td><code>Function</code></td>
+              <td>Sim</td>
+              <td>Parâmetro que irá conter uma função que será utilizada para executar a busca simples.Os parâmetros field e param são obrigatórios.</td>
+            </tr>
+            <tr>
+              <td><strong>advanced-search</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Parâmetro que irá conter uma função que será utilizada para executar a busca avançada. O parâmetro param é obrigatório.</td>
+            </tr>
+            <tr>
+              <td><strong>search-text</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Parâmetro que irá conter uma string que será utilizada como label para o botão de pesquisa.</td>
+            </tr>
+            <tr>
+              <td><strong>saved-filters</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Deve retornar um <code>Array</code> com uma lista de queries salvas.</td>
+            </tr>
+            <tr>
+              <td><strong>save-query</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Função que salva a querie montada no componente.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/gumga-rest-ng@1.0.0/dist/gumga-rest.min.js"></script>
+    <script src="https://unpkg.com/gumga-controller-ng@1.0.0/dist/gumga-controller.min.js"></script>
+    <script src="https://unpkg.com/gumga-generic-filter-ng@1.0.0/dist/gumga-generic-filter.js"></script>
+    <script src="dist/gumga-query-filter.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

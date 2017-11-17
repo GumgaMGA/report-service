@@ -1,0 +1,24 @@
+{
+  "name": "gumga-counter",
+  "description": "Gumga Counter",
+  "main": "./src/counter.js",
+  "authors": [
+    "Gumga Tecnologia da Informação S/A"
+  ],
+  "license": "LGPL-3.0",
+  "keywords": [
+    "Gumga",
+    "Counter"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.8"
+  }
+}

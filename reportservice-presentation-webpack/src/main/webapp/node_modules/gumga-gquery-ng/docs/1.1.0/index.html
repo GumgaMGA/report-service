@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-gquery-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+    <link rel="stylesheet" href="../jsonview/jquery.jsonview.min.css">
+    <style media="screen">
+      .jsonview{
+        font-size: 11px !important;
+      }
+      code span[ng-click]:hover{
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-gquery-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-4">
+          <h2>Descrição</h2>
+          <p>O <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('gquery')">GQuery</span> é o mais novo componente da gumga, com ele você fazer buscas simples e complexas em bancos relacionais usando uma estrutura JSON.</p>
+          <br>
+
+          <p class="text-warning">
+            Nessa versão implementamos uma funcionalidade que te permite fazer buscas com JOINS.
+          </p>
+
+        </div>
+        <div class="col-xs-8">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm install gumga-gquery-ng --save
+
+// bower
+bower install gumga-gquery-ng --save
+
+<span class="text-warning">No GQuery não é necessário injetar modulo, ele já está visivél em todo lugar.</span>
+
+//BOWER
+&lt;script src="node_modules/gumga-gquery-ng/dist/gumga-gquery.min.js"&gt;&lt;/script&gt;
+
+//NPM
+&lt;script src="bower_components/gumga-gquery-ng/dist/gumga-gquery.min.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('gquery')" id="gquery" >GQuery: </a> new GQuery(<span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span> criteria)
+        </div>
+        <div class="panel-body">
+          GQuery é o objeto responsável pela criação das suas buscas baseadas em seus criterios.
+          <br>
+          <br>
+          <h5>Métodos</h5>
+          <table class="table">
+            <tr>
+              <th>and(<span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span> criteria | <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('gquery')">GQuery</span> gquery)</th>
+              <td>Usado para adicionar uma condições "E", seu sonstrutor aceita um <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span> ou um <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('gquery')">GQuery</span></dh>
+            </tr>
+            <tr>
+              <th>or(<span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span> criteria | <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('gquery')">GQuery</span> gquery) </th>
+              <td>Usado para adicionar uma condições "OU", seu sonstrutor aceita um <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span> ou um <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('gquery')">GQuery</span></dh>
+            </tr>
+          </table>
+
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a style="color: blue;cursor: pointer;" id="criteria" ng-click="ctrl.goTo('criteria')">Criteria: </a> new Criteria(String field, <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('comparason-operator')">ComparisonOperator</span>: comparisonOperator, Object value)
+        </div>
+        <div class="panel-body">
+          Criteria é o objeto responsável pela criação das suas condições.
+          <br>
+          <br>
+          <h5>Parâmetros</h5>
+          <table class="table">
+            <tr>
+              <th>field</th>
+              <td>Campo na qual será feita a busca.</dh>
+            </tr>
+            <tr>
+              <th>comparisonOperator</th>
+              <td>Enum que representa o operador de comparação.</dh>
+            </tr>
+            <tr>
+              <th>value</th>
+              <td>Valor a ser comparado na busca.</dh>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a style="color: blue;" ng-click="ctrl.goTo('join')" id="join">Join: </a>new Join(String table, <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('join-type')">JoinType</span> type)
+        </div>
+        <div class="panel-body">
+          Join é o objeto responsável pela criação de joins.
+          <br>
+          <br>
+          <h5>Parâmetros</h5>
+          <table class="table">
+            <tr>
+              <th>table</th>
+              <td>Nome da tabela que você fará uma ligação.</dh>
+            </tr>
+            <tr>
+              <th>type</th>
+              <td>Atributo que define o tipo da ligação, informe um JoinType.</dh>
+            </tr>
+          </table>
+          <h5>Métodos</h5>
+          <table class="table">
+            <tr>
+              <th>on(<span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span> criteria)</th>
+              <td>Método resposável por atribuir a ligação inicial entre suas tabelas.</dh>
+            </tr>
+            <tr>
+              <th>and(<span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span> criteria)</th>
+              <td>Usado para adicionar uma condições "E".</dh>
+            </tr>
+            <tr>
+              <th>or(<span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span> criteria) </th>
+              <td>Usado para adicionar uma condições "OU".</dh>
+            </tr>
+          </table>
+
+
+          <h4>Exemplo: </h4> Buscando todos os usuários que esteja em uma organização cujo o nome da organização possua GUMGA.
+
+          <pre><code class="prettyprint">var gQuery = new <span ng-click="ctrl.goTo('gquery')">GQuery</span>(new <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('criteria')">Criteria</span>('org.name', <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('comparason-operator')">ComparisonOperator.CONTAINS</span>, 'Gumga'))
+                          .join(new <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('join')">Join</span>('obj.organizations as org', <span style="color: blue;cursor: pointer;" ng-click="ctrl.goTo('join-type')">JoinType.INNER</span>))
+
+console.log(gQuery);</code></pre>
+
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a style="color: blue;" id="join-type" ng-click="ctrl.goTo('join-type')">JoinType: ENUM</a>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>INNER <span style="color: #666;">"inner join"</span></li>
+            <li>LEFT <span style="color: #666;">"left join"</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a style="color: blue;" id="comparason-operator" ng-click="ctrl.goTo('comparason-operator')">ComparisonOperator: ENUM</a>
+        </div>
+        <div class="panel-body">
+          <ul>
+            <li>CONTAINS <span style="color: #666;">"%like%"</span></li>
+            <li>NOT_CONTAINS <span style="color: #666;">"%not like%"</span></li>
+            <li>STARTS_WITH <span style="color: #666;">"%like"</span></li>
+            <li>ENDS_WITH <span style="color: #666;">"like%"</span></li>
+            <li>EQUAL <span style="color: #666;">"="</span></li>
+            <li>NOT_EQUAL <span style="color: #666;">"!="</span></li>
+            <li>GREATER_EQUAL <span style="color: #666;">">="</span></li>
+            <li>GREATER <span style="color: #666;">">"</span></li>
+            <li>LOWER_EQUAL <span style="color: #666;">"<="</span></li>
+            <li>LOWER <span style="color: #666;">"<"</span></li>
+            <li>LIKE <span style="color: #666;">"like"</span></li>
+            <li>IN_ELEMENTS <span style="color: #666;">"in elements"</span></li>
+            <li>IN <span style="color: #666;">"in"</span></li>
+            <li>IS <span style="color: #666;">"is"</span></li>
+            <li>BETWEEN <span style="color: #666;">"between"</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Teste o GQuery e veja como ficará seu JSON
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="js">
+                </div>
+                <div role="tabpanel" class="tab-pane active" id="console">
+                  <div class="row" style="display: flex;position:relative;">
+
+                    <div class="col-md-7" > <br>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <p class="pull-left text-warning" style="position: absolute; top: -30px; left: 40px;">Retorne o gquery para ver a saida do JSON.</p>
+                        </div>
+                      </div>
+                      <div ng-model="ctrl.consoleValue"
+                           ng-change="ctrl.generate()"
+                           ng-model-options="{ debounce: 1000 }"
+                           ui-ace="{ mode: 'javascript', useWrapMode: true, showGutter: true, onLoad: vm.aceLoaded }"
+                           style="width: 100%;height: 100%;min-height: 200px;border: 1px solid #ddd;position: absolute;left: 0;width: 100%;top: 15px;">
+                      </div>
+                    </div>
+                    <div class="col-md-5" style="max-height: 400px; overflow: auto;"><br>
+                      <button style="margin-top: -30px; position: absolute; right: 10px; top: 30px;" data-clipboard-text="{{ctrl.json}}" class="pull-right btn gmd btn-default copy-json pull-right" type="button">Copiar</button>
+                      <div id="json"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div> <br><br><br>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="../ace-builds/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../ace-builds/src-min-noconflict/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+    <script src="../angular-ui-ace/ui-ace.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script type="text/javascript" src="../jsonview/jquery.jsonview.min.js"></script>
+    <script type="text/javascript" src="../clipboard/clipboard.min.js"></script>
+    <script src="dist/gumga-gquery.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

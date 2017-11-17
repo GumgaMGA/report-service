@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-rest-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-rest-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-4">
+          <h2>Descrição</h2>
+          <p>O service GumgaRest é uma evolução do service gumgaBase, pois sua configuração não necessita de nenhuma outra configuração adicional no service que irá chamá-lo.</p>
+        </div>
+        <div class="col-xs-8">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-rest-ng --save
+
+// bower
+bower install gumga-rest-ng --save
+
+//Injeção do modulo
+angular.module('yourApp', ['gumga.rest']);
+
+&lt;script src="node_modules/gumga-counter-ng/dist/gumga-rest.min.js"&gt;&lt;/script&gt;
+&lt;script src="bower_components/gumga-counter-ng/dist/gumga-rest.min.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Usando
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <ul class="nav nav-tabs" role="tablist">
+                <!-- <li role="presentation" class="active"><a href="#html" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li> -->
+                <li role="presentation" class="active"><a href="#js" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              <div class="tab-content">
+                <!-- <div role="tabpanel" class="tab-pane " id="html">
+                  <pre><code  class="prettyprint"></code></pre>
+                </div> -->
+                <div role="tabpanel" class="tab-pane active" id="js">
+                  <pre><code class="prettyprint">angular.module('app', ['gumga.rest'])
+  .service('yourService', function(GumgaRest){
+
+    var service = new GumgaRest('http://www.gumga.com.br/api');
+    // A variável service será populado com os métodos listados abaixo.
+    // caso não queira adicionar nenhum método, utilizar:
+    // return new GumgaRest('http://www.gumga.com.br/api');
+
+    service.get = function(page){
+      console.log('Modifiquei um método da service e chamei o padrão!');
+      return GumgaRest.prototype.get.call(this,page);
+    }
+
+    return service;
+
+  })
+</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Métodos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Método</th>
+              <th>Descrição</th>
+              <th>Retorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>get(params)</strong></td>
+              <td>O método get aceita um parâmetro params e retorna uma promise de uma chamada HTTP do tipo GET.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>resetAndGet()</strong></td>
+              <td>O método resetAndGet reseta a query atual e performa uma chamada HTTP do tipo GET.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getById(id)</strong></td>
+              <td>O método getById aceita um parâmetro id e retorna uma promise de uma chamada HTTP do tipo GET.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getNew()</strong></td>
+              <td>O método resetAndGet reseta a query atual e performa uma chamada HTTP do tipo GET.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>delete(data)</strong></td>
+              <td>O método delete recebe como parâmetro um objeto que será deletado. O objeto deve ter um parâmetro ID, que será passado para a url da chamada.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>sort(field, way)</strong></td>
+              <td>O método sort recebe dois parâmetros para fazer a ordenação: field e way, que determinarão qual campo será ordenado e se será 'asc' ou 'desc'.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>deleteCollection(array)</strong></td>
+              <td>O método deleteCollection aceita um parâmetro array e retorna uma promise de uma série de chamadas http do tipo DELETE que serão resolvidas ao mesmo tempo.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>saveImage(attribute, data)</strong></td>
+              <td>O método saveImage aceita dois parâmetros attribute e data e retorna uma promise de de uma chamada HTTP POST FORM-DATA.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>deleteImage(attribute, data)</strong></td>
+              <td>O método deleteImage aceita dois parâmetros url e data e retorna uma promise de de uma chamada HTTP DELETE FORM-DATA.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getSearch(field, param)</strong></td>
+              <td>O método getSearch aceita dois parâmetros field e param e retorna uma promise de uma chamada HTTP do tipo GET.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getAdvancedSearch(param)</strong></td>
+              <td>O método getAdvancedSearch aceita um parâmetro param e retorna uma promise de uma chamada HTTP do tipo GET.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>redoSearch()</strong></td>
+              <td>O método redoSearch é usado para resgatar o estado do último query. </td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>resetDefaultState()</strong></td>
+              <td>O método resetDefaultState retorna o objeto de query ao seu estado padrão.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>saveQuery(query)</strong></td>
+              <td>O método saveQuery aceita um parâmetro query e retorna uma promise de uma chamada HTTP do tipo POST.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getQuery(page)</strong></td>
+              <td>O método getQuery aceita um parâmetro page e retorna uma promise de uma chamada HTTP do tipo GET. Este Parâmetro page é o valor de retorno do objeto location.hash disponível através do browser. É necessário este atributo para pegar apenas as queries relacionadas a página. As informações do usuário já são passadas através do token.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getSelectedTags(id)</strong></td>
+              <td>O método getSelectedTags aceita um parâmetro id e retorna uma promise de uma chamada HTTP do tipo GET. Este Parâmetro id é o identificador da entidade que está sendo editada. Este atributo é necessário para buscar apenas as tags que estão ligadas aquele registro.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getAvailableTags()</strong></td>
+              <td>O método getSelectedTags não necessita de parâmetros e retorna uma promise de uma chamada HTTP do tipo GET. </td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>postTags(objectId, values)</strong></td>
+              <td>O método postTags é utilizado para salvar as tags que foram selecionadas pelo usuário para este registro.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+            <tr>
+              <td><strong>extend(method, url,config)</strong></td>
+              <td>O método extend permite ao programador extender a url que foi construída. O programador pode escolher o método, a url que será adicionada depois da url que foi passada para o construtor e quaisquer configurações necessárias.</td>
+              <td><code>[HttpPromise]</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.6.3/angular-locale_pt-br.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="dist/gumga-rest.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

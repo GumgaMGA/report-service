@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+</head>
+
+<body data-ng-controller="ctrl">
+
+  <h1>Gumga One To Many</h1>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <form name="Example" gumga-form>
+        <gumga-one-to-many
+          name="Novo Cliente"
+          children="pessoas.data"
+          template-url="modal.html"
+          size="md"
+          displayable-property="nome"
+          controller="ModalClienteController"
+          edit-button-class="btn btn-primary pull-right" remove-button-class="btn btn-danger pull-right">
+          <p>
+            {{$parent.child.nome}}
+          </p>
+          <p>
+            {{$parent.child.dataNascimento | date:"dd/MM/yyyy"}}
+          </p>
+        </gumga-one-to-many>
+      </form>
+    </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  <script src="node_modules/gumga-rest-ng/dist/gumga-rest.js"></script>
+  <script src="node_modules/gumga-controller-ng/dist/gumga-controller.js"></script>
+  <script src="node_modules/gumga-populate-ng/dist/gumga-populate.js"></script>
+  <script src="dist/gumga-one-to-many.js"></script>
+  <script>
+    angular
+      .module('app', ['ui.bootstrap','gumga.onetomany','gumga.controller', 'gumga.rest'])
+      .config(function ($httpProvider) {
+        $httpProvider.defaults.headers.common['gumgaToken'] = 'homologacaokids'
+      })
+      .controller('ctrl', ['gumgaController', 'GumgaRest', '$scope', function (gumgaController, GumgaRest, $scope) {
+        var PessoaService = new GumgaRest('http://192.168.25.250/gileadeweb-api/api/pessoacadastro');
+        gumgaController.createRestMethods($scope, PessoaService, 'pessoas');
+        $scope.pessoas.methods.get();
+      }])
+      .controller('ModalClienteController',
+        function($scope, entity, $uibModalInstance){
+
+        $scope.entity = angular.copy(entity) || {};
+
+        $scope.cancelar = function(){
+          $uibModalInstance.dismiss('cancel');
+        }
+
+        $scope.salvar = function(entity){
+          $uibModalInstance.close(entity);
+        }
+      })
+  </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "gumga-confirm",
+  "version": "1.2.0",
+  "description": "Gumga Confirm",
+  "main": "./src/confirm.js",
+  "authors": [
+    "Gumga Tecnologia da Informação S/A"
+  ],
+  "license": "GPL-3.0",
+  "keywords": [
+    "gumga",
+    "confirm"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.8",
+    "angular-bootstrap": "2.3.2"
+  }
+}

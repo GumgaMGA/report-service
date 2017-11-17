@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-address-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-address-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-6">
+          <h2>Descrição</h2>
+          <p>O componente GumgaAddress recebe um objeto que será preenchido com o endereço, que pode ser pesquisado através do CEP (Utilizando um WebService GUMGA), ou preenchido manualmente pelo usuário. Este objeto de entrada pode ser vazio ou preferivelmente no formato do objeto GUMGA. Além disso, o componente ainda possui um botão redireciona para o google maps para o endereço preenchido.</p>
+          <p><label class="text-warning">O que há de novo?</label> Criado provider que possibilita alterar a tradução dos labels de cada campo, veja na aba <span>Javascript</span>.</p>
+
+        </div>
+        <div class="col-xs-6">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-address-ng --save
+
+// bower
+bower install gumga-address-ng --save
+
+//MODULO
+angular.module('yourApp', ['gumga.address'])</code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Usando
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6">
+
+              <form gumga-form>
+                <gumga-address   state-code="true"
+                                 value="address"
+                                 name="endereco"
+                                 title="Preencha um endereço"
+                                 state-city="false"
+                                 state-city-ibge="true"
+                                 cep="false"
+                                 neighbourhood="true"
+                                 street="false"
+                                 on-search-cep-start="start()"
+                                 lat-lng="true"
+                                 street-number="true"
+                                 complement="true"
+                                 required-field-message="ctrl.validRequiredAddress()"
+                                 coords-by-cep="true"
+                                 on-search-cep-success="success()"
+                                 on-search-cep-error="error()"
+                                 coords-by-premisse="true"
+                                 coords-by-number="true">
+                  </gumga-address>
+
+
+                  <gumga-errors placement="right" icon="glyphicon glyphicon-info-sign" label="Campos inválidos" title="Campos inválidos"></gumga-errors>
+              </form>
+
+            </div>
+            <div class="col-xs-6">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#html" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation"><a href="#js" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="html">
+                  <pre><code  class="prettyprint">&lt;form gumga-form&gt;
+  &lt;gumga-address
+    state-code="true"
+    value="address"
+    name="endereco"
+    required-field-message="validRequiredAddress()"
+    title="Preencha um endereço"
+    state-city="false"
+    state-city-ibge="true"
+    cep="false"
+    neighbourhood="true"
+    street="false"
+    lat-lng="true"
+    street-number="true"
+    complement="true"
+    on-search-cep-start="start()"
+    on-search-cep-success="success()"
+    on-search-cep-error="error()"
+    coords-by-cep="true"
+    coords-by-premisse="true"
+    coords-by-number="true"&gt;
+  &lt;/gumga-address&gt;
+&lt;/form&gt;
+</code></pre>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="js">
+                  <pre><code class="prettyprint">angular.module('app', ['gumga.address', 'ui.bootstrap'])
+.config(['$gumgaAddressProvider', function($gumgaAddressProvider){
+  $gumgaAddressProvider.setTranslation({
+    country: 'Pais',
+    zipCode: 'CEP',
+    premisseType: 'Tipo Logradouro',
+    premisse: 'Logradouro',
+    number: 'Número',
+    information: 'Complemento',
+    neighbourhood: 'Bairro',
+    state: 'UF',
+    stateCode: 'Cód. UF',
+    localization: 'Localidade',
+    formalCode: 'Cód. IBGE',
+    coordinates: 'Latitude e Longitude'
+  })
+}])</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Atributos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Parâmetro</th>
+              <th>Tipo</th>
+              <th>Requerido</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>required-field-message</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Atributo responsáveis por configurar os atributos obrigatórios do gumga address, deve ser informado uma função que retorne um obejeto com os atributos que devem ser               <td>Atributo responsáveis por configurar os atributos obrigatórios do gumga address, deve ser informado uma função que retorne um obejeto com os atributos que devem ser obrigatorios.</td>
+            </tr>
+            <tr>
+              <td><strong>value</strong></td>
+              <td><code>Object</code></td>
+              <td>Sim</td>
+              <td>Atributo obrigatório que irá conter um objeto no qual os valores serão preenchidos. Caso o objeto seja vazio, o componente irá atribuir seus valores do mesmo jeito.</td>
+            </tr>
+            <tr>
+              <td><strong>name</strong></td>
+              <td><code>String</code></td>
+              <td>Sim</td>
+              <td>Atributo obrigatório que irá conter uma string que será utilizada pelo componente como identificador. Ele é necessário para caso seja instanciada duas directives no mesmo $scope.</td>
+            </tr>
+            <tr>
+              <td><strong>title</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter uma string que será utilizada pelo componente como título no header do componente.</td>
+            </tr>
+            <tr>
+              <td><strong>cep</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar o bloco de CEP.</td>
+            </tr>
+            <tr>
+              <td><strong>street</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar o bloco de Logradouro.</td>
+            </tr>
+            <tr>
+              <td><strong>street-number</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar o bloco de Logradouro com Número.</td>
+            </tr>
+            <tr>
+              <td><strong>complement</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar o bloco de complemento.</td>
+            </tr>
+            <tr>
+              <td><strong>neighbourhood</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar o bloco de bairro.</td>
+            </tr>
+            <tr>
+              <td><strong>state-code</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar o campo código do estado.</td>
+            </tr>
+            <tr>
+              <td><strong>state-city</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar o bloco para cidade, estado.</td>
+            </tr>
+            <tr>
+              <td><strong>state-city-ibge</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar o bloco para cidade, estado e código do IBGE.</td>
+            </tr>
+            <tr>
+              <td><strong>maps</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um booleano que será utilizado para remover ou adicionar um botão com link externo para o Google Maps do endereço referenciado.</td>
+            </tr>
+            <tr>
+              <td><strong>on-search-cep-start</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter uma função que será executa assim que a busca pelo CEP começar. Requer uso do atributo cep.</td>
+            </tr>
+            <tr>
+              <td><strong>on-search-cep-success</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter uma função que será executa assim que a busca pelo CEP retornar com sucesso. Para que o desenvolvedor possa ver o valor de retorno da função que busca o CEP, ele deve passar um parâmetro $value para a função que estará no atributo, como por exemplo: on-search-cep-success="foo($value)". Além disso, este atributo requer uso do atributo cep..</td>
+            </tr>
+            <tr>
+              <td><strong>on-search-cep-error</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter uma função que será executa assim que a busca pelo CEP retornar com erro. Para que o desenvolvedor possa ver o valor de retorno da função que busca o CEP, ele deve passar um parâmetro $value para a função que estará no atributo, como por exemplo: on-search-cep-error="foo($value)".</td>
+            </tr>
+            <tr>
+              <td><strong>coords-by-cep</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo que vai ativar ou desativar a busca de latitude e longitude ao retirar o foco do campo cep.</td>
+            </tr>
+            <tr>
+              <td><strong>coords-by-premisse</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo que vai ativar ou desativar a busca de latitude e longitude ao mudar o tipo de logradouro.</td>
+            </tr>
+            <tr>
+              <td><strong>coords-by-number</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo que vai ativar ou desativar a busca de latitude e longitude ao retirar o foco do campo número.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="dist/gumga-address.min.js"></script>
+    <script src="https://unpkg.com/gumga-form-ng@1.2.0/dist/gumga-form.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

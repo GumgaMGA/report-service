@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-one-to-many-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-one-to-many-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-6">
+          <h2>Descrição</h2>
+          <p>O componente gumga-one-to-many-ng pode ser usado quando é necessário a criação de uma lista de objetos dentro do formulário, especialmente quando esses objetos acessam outros Services. Ela lança um modal para a criação destes objetos, que podem ser recursivos. Além disso, possui suporte a edição e remoção destes registros.</p>
+
+          <h3>Pré requesitos</h3>
+          <p>
+            <ul>
+              <li>UI Bootstrap</li>
+              <li>Gumga Populate</li>
+            </ul>
+          </p>
+        </div>
+        <div class="col-xs-6">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-one-to-many-ng --save
+
+// bower
+bower install gumga-one-to-many-ng --save
+
+// HTML
+&lt;script src="node_modules/gumga-one-to-many-ng/dist/gumga-one-to-many.min.js">&lt;/script>
+// ou
+&lt;script src="bower_components/gumga-one-to-many-ng/dist/gumga-one-to-many.min.js">&lt;/script>
+</code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Usando
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="row">
+                <gumga-one-to-many
+                  name="Novo Cliente"
+                  children="ctrl.clientes"
+                  template-url="modal.html"
+                  displayable-property="nome"
+                  controller="ModalClienteController"
+                  property="nome"
+                  size="md"
+                  edit-button-class="btn btn-primary"
+                  remove-button-class="btn btn-danger"
+                  class="ng-isolate-scope">
+                </gumga-one-to-many>
+
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#html" aria-controls="html" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation"><a href="#js" aria-controls="js" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="html">
+                  <pre><code class="prettyprint" ng-non-bindable>&lt;gumga-one-to-many
+  name="Novo Cliente"
+  children="ctrl.clientes"
+  template-url="modal.html"
+  size="md"
+  displayable-property="nome"
+  controller="ModalClienteController"
+  property="nome"
+  edit-button-class="btn btn-primary"
+  remove-button-class="btn btn-danger"
+  class="ng-isolate-scope">
+&lt;/gumga-one-to-many>
+
+&lt;!-- ./modal.html -->
+&lt;div class="modal-header">
+  &lt;h3 class="modal-title">OneToMany Example&lt;/h3>
+&lt;/div>
+&lt;div class="modal-body">
+  &lt;div class="row">
+    &lt;div class="col-sm-12">
+      &lt;form name="ExampleOneToMany">
+        &lt;label>Nome&lt;/label>
+        &lt;input ng-model="entity.nome" class="form-control">
+      &lt;/form>
+    &lt;/div>
+  &lt;/div>
+&lt;/div>
+&lt;div class="modal-footer">
+  &lt;div class="row">
+    &lt;div class="col-sm-12">
+      &lt;button ng-click="cancelar()" class="btn btn-default">Cancelar&lt;/button>
+      &lt;button ng-click="salvar(entity)" ng-disabled="!entity.nome" class="btn btn-primary">Salvar&lt;/button>
+    &lt;/div>
+  &lt;/div>
+&lt;/div></code></pre>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="js">
+                  <pre><code class="prettyprint">angular.module('app', ['ui.bootstrap','gumga.onetomany'])
+  .controller('Ctrl', function () {
+    var ctrl = this
+    ctrl.clientes = [{
+      nome: 'Mateus Miranda',
+      id: 1
+    }]
+  })
+  .controller('ModalClienteController',
+    function($scope, entity, $uibModalInstance){
+
+    $scope.entity = angular.copy(entity) || {};
+
+    $scope.cancelar = function(){
+      $uibModalInstance.dismiss('cancel');
+    }
+
+    $scope.salvar = function(entity){
+      $uibModalInstance.close(entity);
+    }
+  })</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Atributos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Parâmetro</th>
+              <th>Tipo</th>
+              <th>Requerido</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>size</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Tamanho do modal. <b>sm, md, lg</b>.</td>
+            </tr>
+            <tr>
+              <td><strong>children</strong></td>
+              <td><code>Array</code></td>
+              <td>Sim</td>
+              <td>Utilizado para construir a lista.</td>
+            </tr>
+            <tr>
+              <td><strong>template-url</strong></td>
+              <td><code>String</code></td>
+              <td>Sim</td>
+              <td>Url na qual o template do modal estará.</td>
+            </tr>
+            <tr>
+              <td><strong>property</strong></td>
+              <td><code>String</code></td>
+              <td>Sim</td>
+              <td>Propriedade do objeto que será mostrada na lista.</td>
+            </tr>
+            <tr>
+              <td><strong>modal-title</strong></td>
+              <td><code>String</code></td>
+              <td>Sim</td>
+              <td>Título que será passado para o controller.</td>
+            </tr>
+            <tr>
+              <td><strong>name</strong></td>
+              <td><code>String</code></td>
+              <td>Sim</td>
+              <td>Texto do botão que abre a modal.</td>
+            </tr>
+            <tr>
+              <td><strong>controller</strong></td>
+              <td><code>String</code></td>
+              <td>Sim</td>
+              <td>Nome do controller que será atribuido ao modal. Este controller necessita injetar além do $scope, as propriedades entity e title.</td>
+            </tr>
+            <tr>
+              <td><strong>on-delete</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Chamada quando um elemento da lista for deletado.</td>
+            </tr>
+            <tr>
+              <td><strong>on-value-visualization-opened</strong></td>
+              <td><code>Function</code></td>
+              <td>Sim</td>
+              <td>Executada quando o usuário tiver aberto o modal para visualização de dados.</td>
+            </tr>
+            <tr>
+              <td><strong>on-value-visualization-closed</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Executada quando o usuário tiver fechado o modal para visualização de dados.</td>
+            </tr>
+            <tr>
+              <td><strong>edit-button</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Texto do botão editar.</td>
+            </tr>
+            <tr>
+              <td><strong>edit-button-title</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo title do botão editar.</td>
+            </tr>
+            <tr>
+              <td><strong>edit-button-class</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo class do botão editar.</td>
+            </tr>
+            <tr>
+              <td><strong>edit-button-icon</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo class do ícone do botão editar.</td>
+            </tr>
+            <tr>
+              <td><strong>remove-button</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Texto do botão remover.</td>
+            </tr>
+            <tr>
+              <td><strong>remove-button-title</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo title do botão remover.</td>
+            </tr>
+            <tr>
+              <td><strong>remove-button-class</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo class do botão remover.</td>
+            </tr>
+            <tr>
+              <td><strong>remove-button-icon</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo class do ícone do botão remover.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/gumga-populate-ng@1.0.0/dist/gumga-populate.min.js"></script>
+    <script src="dist/gumga-one-to-many.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+</head>
+
+<body data-ng-controller="ctrl">
+  <h1>Gumga Breadcrumb</h1>
+  <form name="Example">
+    <gumga-password value="entity.password" contains-uppercase="true" contains-numbers="true"></gumga-password>
+  </form>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="../node_modules/angular/angular.min.js"></script>
+  <script src="../dist/gumga-breadcrumb.js"></script>
+  <script>
+    angular
+      .module('app', ['gumga.breadcrumb'])
+      .controller('ctrl', ['$scope', function ($scope) {
+      }])
+      .run(['$rootScope', function ($rootScope) {
+        $rootScope.breadcrumbs = [];
+        $rootScope.$on('$stateChangeSuccess', function (event, toState) {
+          updateBreadcrumb(toState.name, toState.data.id);
+        });
+        function updateBreadcrumb(state, id) {
+          function get(id) {
+            for (var i = 0, len = $rootScope.breadcrumbs.length; i < len; i++) {
+              if ($rootScope.breadcrumbs[i].id === id) {
+                return i;
+              }
+            }
+          }
+          if (id && get(id) >= 0) {
+            $rootScope.breadcrumbs.splice(get(id), $rootScope.breadcrumbs.length - get(id), { state: state, id: id });
+          } else {
+            $rootScope.breadcrumbs.push({ state: state, id: id });
+          }
+          !id ? $rootScope.breadcrumbs = [] : angular.noop;
+          $rootScope.$broadcast('breadChanged');
+        }
+      }])
+  </script>
+</body>
+
+</html>

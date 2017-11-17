@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-form-buttons-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-form-buttons-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-6">
+          <h2>Descrição</h2>
+          <p>O componente GumgaFormButtons é utilizado para que o desenvolvedor não precise implementar os botões de controle de formulário.</p>
+        </div>
+        <div class="col-xs-6">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-form-buttons-ng --save
+
+// bower
+bower install gumga-form-buttons-ng --save
+
+//MODULO
+angular.module('yourApp', ['gumga.formbuttons'])</code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Usando
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6">
+
+              <gumga-form-buttons
+                    valid="form.$valid"
+                    class="gmd"
+                    class-save="raised"
+                    class-cancel="raised"
+                    back="person.list"
+                    submit="foo()"
+                    continue="{{!$stateParams.id}}"
+                    confirm-dirty="{{true}}">
+              </gumga-form-buttons>
+
+            </div>
+            <div class="col-xs-6">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#html" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li>
+                <!-- <li role="presentation"><a href="#js" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li> -->
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="html">
+                  <pre><code  class="prettyprint">&lt;gumga-form-buttons
+  valid-code="form.$valid"
+  class="gmd"
+  class-save="raised"
+  class-cancel="raised"
+  back="person.list"
+  submit="foo()"
+  continue="{{!$stateParams.id}}"
+  confirm-dirty="{{true}}">
+&lt;/gumga-form-buttons>
+</code></pre>
+                </div>
+                <!-- <div role="tabpanel" class="tab-pane" id="js">
+                  <pre><code class="prettyprint">
+}</code></pre>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Atributos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Parâmetro</th>
+              <th>Tipo</th>
+              <th>Requerido</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>valid</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Sim</td>
+              <td>Atributo que será passado para o componente para que o botão de salvar seja liberado ou não.</td>
+            </tr>
+            <tr>
+              <td><strong>back</strong></td>
+              <td><code>String</code></td>
+              <td>Sim</td>
+              <td>Atributo que será utilizado para definir o estado para qual será retornado quando o usuário clicar em Retornar ou Salvar. Valor default: NOMEDOSTATE.list</td>
+            </tr>
+            <tr>
+              <td><strong>submit</strong></td>
+              <td><code>Function</code></td>
+              <td>Sim</td>
+              <td>Atributo que irá conter uma função que será chamada quando o usuário clicar em salvar.</td>
+            </tr>
+            <tr>
+              <td><strong>class</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo que será passado para o componente para aplicar classes css nos botões.</td>
+            </tr>
+            <tr>
+              <td><strong>class-save</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo que será passado para o componente para aplicar classes css apenas no botão de salvar.</td>
+            </tr>
+            <tr>
+              <td><strong>class-cancel</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo que será passado para o componente para aplicar classes css apenas no botão de cancelar.</td>
+            </tr>
+            <tr>
+              <td><strong>position</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo para alinhar os botões para esquerda left ou direita right da tela.</td>
+            </tr>
+            <tr>
+              <td><strong>continue</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo que irá ser utilizado para determinar se irá aparecer a opção de continuar inserindo.</td>
+            </tr>
+            <tr>
+              <td><strong>confirm-dirty</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo usado para determinar se, quando o usuário clicar no botão de retornar e já tiver digitado algo, aparecerá um modal de confirmação de saída da tela.</td>
+            </tr>
+            <tr>
+              <td><strong>model</strong></td>
+              <td><code>Object</code></td>
+              <td>Não</td>
+              <td>Atributo que receberá o model usado no form para validar se houve edição nos dados, usado caso confirm-dirty seja true.</td>
+            </tr>
+            <tr>
+              <td><strong>keep-inserting-text</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo que será utilizado para trocar o texto que aparece do lado do checkbox.</td>
+            </tr>
+            <tr>
+              <td><strong>return-text</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo que será utilizado para trocar o texto que aparece no botão de retorno.</td>
+            </tr>
+            <tr>
+              <td><strong>save-text</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>Atributo que será utilizado para trocar o texto que aparece no botão de salvar.</td>
+            </tr>
+            <tr>
+              <td><strong>reverse-order</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo que será utilizado para alterar a orderm dos botões que aparecem na tela.</td>
+            </tr>
+            <tr>
+              <td><strong>inline</strong></td>
+              <td><code>Sem tipo</code></td>
+              <td>Não</td>
+              <td>Atributo sem valor, remove o elemento pai com a classe .row.col-md-12, podendo encaixar o componente onde achar melhor. Caso o atributo não for colocado ocupada 1 linha com 12 colunas (.row.col-md-12).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="dist/gumga-form-buttons.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

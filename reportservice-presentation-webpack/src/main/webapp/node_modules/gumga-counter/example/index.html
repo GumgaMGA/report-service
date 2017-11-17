@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+</head>
+
+<body data-ng-controller="ctrl">
+  <h1>Gumga Counter</h1>
+  <form name="Example" novalidate>
+    <input type="text" gumga-counter ng-model="entity.name" gumga-max-length-text="10" />
+  </form>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="../node_modules/angular/angular.min.js"></script>
+  <script src="../dist/gumga-counter.js"></script>
+  <script>
+    angular
+      .module('app', ['gumga.counter'])
+      .controller('ctrl', ['$scope', function ($scope) {
+        // $scope.entity = {
+        //   name: ''
+        // }
+      }])
+  </script>
+</body>
+
+</html>

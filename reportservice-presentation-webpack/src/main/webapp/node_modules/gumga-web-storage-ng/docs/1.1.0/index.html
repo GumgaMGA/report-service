@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-web-storage-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-web-storage-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-4">
+          <h2>Descrição</h2>
+          <p>O service GumgaWebStorage é utilizado para ajudar o desenvolvedor a trabalhar com o storage do Browser.</p>
+        </div>
+        <div class="col-xs-8">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-web-storage-ng --save
+
+// bower
+bower install gumga-web-storage-ng --save
+//Injeção do modulo
+angular.module('yourApp', ['gumga.webstorage']);
+
+&lt;script src="node_modules/gumga-counter-ng/dist/gumga-web-storage.min.js"&gt;&lt;/script&gt;
+&lt;script src="bower_components/gumga-counter-ng/dist/gumga-web-storage.min.js"&gt;&lt;/script&gt; </code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Usando
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <ul class="nav nav-tabs" role="tablist">
+                <!-- <li role="presentation" class="active"><a href="#html" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li> -->
+                <li role="presentation" class="active"><a href="#js" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="js">
+                  <pre><code class="prettyprint">angular.module('yourApp', ['gumga.webstorage'])
+  .controller('ctrl', function($scope, GumgaWebStorage){
+
+    GumgaWebStorage.setLocalStorageItem('nome', 'Mateus');
+
+    console.log(GumgaWebStorage.getLocalStorageItem('nome')); //Mateus
+
+    GumgaWebStorage.removeLocalStorageItem('nome');
+
+    console.log(GumgaWebStorage.getLocalStorageItem('nome')); //NULL
+
+  })</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Métodos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Método</th>
+              <th>Descrição</th>
+              <th>Retorno</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>setSessionStorageItem(key, value)</strong></td>
+              <td>Os parâmetros key e value são chave e valor a ser armazenado.</td>
+              <td><code>[VOID]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getSessionStorageItem(key)</strong></td>
+              <td>O parâmetro key é o identificador do valor que deseja recuperar.</td>
+              <td><code>[String|Number|Object]</code></td>
+            </tr>
+            <tr>
+              <td><strong>removeSessionStorageItem(key)</strong></td>
+              <td>O parâmetro key é o identificador do valor que será removido da sessionStorage.</td>
+              <td><code>[VOID]</code></td>
+            </tr>
+            <tr>
+              <td><strong>clearSessionStorage()</strong></td>
+              <td>Limpa todos os dados armazenados na sessionStorage.</td>
+              <td><code>[VOID]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getNumberOfItemsInSessionStorage()</strong></td>
+              <td>Retorna o número de itens no sessionStorage.</td>
+              <td><code>[Number]</code></td>
+            </tr>
+            <tr>
+              <td><strong>setLocalStorageItem(key, value)</strong></td>
+              <td>Os parâmetros key e value são chave e valor a ser armazenado.</td>
+              <td><code>[VOID]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getLocalStorageItem(key)</strong></td>
+              <td>O parâmetro key é o identificador do valor que deseja recuperar.</td>
+              <td><code>[String|Number|Object]</code></td>
+            </tr>
+            <tr>
+              <td><strong>removeLocalStorageItem(key)</strong></td>
+              <td>O parâmetro key é o identificador do valor que será removido da localStorage.</td>
+              <td><code>[VOID]</code></td>
+            </tr>
+            <tr>
+              <td><strong>clearLocalStorage()</strong></td>
+              <td>Limpa todos os dados armazenados na localStorage.</td>
+              <td><code>[VOID]</code></td>
+            </tr>
+            <tr>
+              <td><strong>getNumberOfItemsInLocalStorage()</strong></td>
+              <td>Retorna o número de itens no localStorage.</td>
+              <td><code>[Number]</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="dist/gumga-web-storage.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

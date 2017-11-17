@@ -1,0 +1,26 @@
+{
+  "name": "gumga-web-storage-ng",
+  "version": "1.1.0",
+  "description": "Gumga WebStorage",
+  "main": "./src/web-storage.js",
+  "authors": [
+    "Gumga Tecnologia da Informação S/A"
+  ],
+  "license": "LGPL-3.0",
+  "keywords": [
+    "gumga",
+    "webstorage",
+    "angular 1.x"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8"
+  }
+}

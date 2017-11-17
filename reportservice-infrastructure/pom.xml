@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.gumga</groupId>
+        <artifactId>reportservice</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>reportservice-infrastructure</artifactId>
+    <name>reportservice-infrastructure</name>
+    <packaging>jar</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+    <dependencies>
+        <!-- DEPENDENCIAS de Módulos    -->
+        <dependency>
+            <groupId>io.gumga</groupId>
+            <artifactId>reportservice-domain</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>io.gumga</groupId>
+            <artifactId>reportservice-configuration</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <!-- DEPENDENCIAS do Framework GUMGA    -->
+        <dependency>
+            <groupId>io.gumga</groupId>
+            <artifactId>gumga-application</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>io.gumga</groupId>
+            <artifactId>gumga-security</artifactId>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>compile</scope>
+            <type>jar</type>
+        </dependency>
+        <!-- DEPENDENCIAS em geral-->
+    </dependencies>
+</project>

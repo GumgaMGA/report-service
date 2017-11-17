@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-translate-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-translate-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-4">
+          <h2>Descrição</h2>
+          <p>O componente gumgaTranslate recebe um valor por atributo, informando qual a linguagem a ser carregada, por exemplo, pt-br. Para que funcione, deve conter um arquivo JSON dentro do diretório i18n/ com o nome da linguagem, por exemplo, /i18n/pt-br.json. </p>
+        </div>
+        <div class="col-xs-8">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-translate-ng --save
+
+// bower
+bower install gumga-translate-ng --save
+
+//Injeção do modulo
+angular.module('yourApp', ['gumga.translate']);
+
+&lt;script src="node_modules/gumga-counter-ng/dist/gumga-translate.min.js"&gt;&lt;/script&gt;
+&lt;script src="bower_components/gumga-counter-ng/dist/gumga-translate.min.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Usando
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-5">
+              <form name="Example" class="container" gumga-translate="pt-br">
+                <label gumga-translate-tag="person.name">person.name</label> <br>
+              </form>
+            </div>
+            <div class="col-xs-7">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#html" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation" ><a href="#js" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="html">
+                  <pre><code  class="prettyprint">&lt;form name="Example" class="container" gumga-translate="pt-br"&gt;
+  &lt;label gumga-translate-tag="person.name"&gt;person.name&lt;/label&gt; &lt;br&gt;
+&lt;/form&gt;</code></pre>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="js">
+                  <pre><code class="prettyprint">angular.module('yourApp', ['gumga.translate'])
+  .controller('ctrl', function(){
+
+  })
+</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Atributos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Exemplo</th>
+              <th>Descrição</th>
+              <th>Tipo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>gumga-translate="pt-br"</strong></td>
+              <td>Nome da linguagem que será carregada, o nome do arquivo deve estar igual ao valor atribuído.</td>
+              <td><code>String</code></td>
+            </tr>
+            <tr>
+              <td><strong>gumga-translate-tag="pedido.enderecodeentrega,en-us"</strong></td>
+              <td>O componente gumgaTranslateTag recebe um valor por atributo, informando qual a linguagem a ser carregada, por exemplo, pedido.enderecodeentrega. Também tem a possibilidade de separar o valor com virgula, sendo que após a virgula, seja informado a linguagem alternativa para aquela string, por exemplo: pedido.enderecodeentrega,en-us.</td>
+              <td><code>String</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Provider
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Configuração</th>
+              <th>Descrição</th>
+              <th>Parâmentros</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>$gumgaTranslateProvider.setURL(&lt;URL&gt;)</strong></td>
+              <td>URL onde será requisitado o arquivo de tradução.</td>
+              <td><code>String</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.6.3/angular-locale_pt-br.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="dist/gumga-translate.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

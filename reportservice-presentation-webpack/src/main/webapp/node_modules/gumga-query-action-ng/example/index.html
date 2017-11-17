@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+</head>
+
+<body data-ng-controller="Ctrl as ctrl">
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <h1>Gumga Query Action</h1>
+
+      <div>
+        <gumga-query search="search(field,param)" advanced-search="advancedSearch(param)" search-text="Pesquisar"
+          saved-filters="destinos.methods.getQuery(page)" save-query="destinos.methods.postQuery(query, name)">
+          <search-field field="nome" label="Nome" select="true"></search-field>
+          <search-field field="age" label="Idade"></search-field>
+          <advanced-search-field type="string" label="Histórico" field="historico"></advanced-search-field>
+          <advanced-search-field type="string" label="Nome" field="nome"></advanced-search-field>
+          <advanced-search-field type="number" label="Idade" field="idade"></advanced-search-field>
+          <advanced-search-field type="float" label="Peso" field="peso"></advanced-search-field>
+          <advanced-search-field type="money" label="Preço" field="preco"></advanced-search-field>
+          <advanced-search-field type="cpf" label="CPF" field="cpf"></advanced-search-field>
+        </gumga-query>
+      </div>
+
+      <div class="">
+        <gumga-query-action
+          entity="destinos"
+          selected="selectedValues"
+          query="query"
+          beyond="beyond"
+          actions="actions"
+          on-action="action(queryaction)">
+        </gumga-query-action>
+      </div>
+
+      <gumga-list sort="pessoa.methods.sort(field, dir)" class="table-striped table-condensed" data="destinos.data" configuration="tableConfig"></gumga-list>
+
+      <ul
+        uib-pagination
+        ng-model="page"
+        ng-show="destinos.data.length > 0"
+        items-per-page="destinos.pageSize"
+        total-items="destinos.count" ng-change="destinos.methods.get(page)"
+        >
+      </ul>
+
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="../node_modules/angular/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  <script src="../node_modules/gumga-list-ng/dist/gumga-list.min.js"></script>
+  <script src="../node_modules/gumga-rest-ng/dist/gumga-rest.min.js"></script>
+  <script src="../node_modules/gumga-controller-ng/dist/gumga-controller.min.js"></script>
+  <script src="../node_modules/gumga-generic-filter-ng/dist/gumga-generic-filter.js"></script>
+  <script src="../node_modules/gumga-query-filter-ng/dist/gumga-query-filter.js"></script>
+  <script src="../dist/gumga-query-action.js"></script>
+  <script>
+    angular
+      .module('app', ['gumga.queryaction','ui.bootstrap', 'gumga.rest', 'gumga.controller', 'gumga.genericfilter','gumga.list','gumga.queryfilter'])
+      .config(function ($httpProvider) {
+        $httpProvider.defaults.headers.common['gumgaToken'] = 'eterno'
+      })
+      .controller('Ctrl', ['gumgaController', 'GumgaRest', '$scope', '$http', function (gumgaController, GumgaRest, $scope, $http) {
+        $scope.actions = [
+          { key: 'maskAsRead', label: 'Marcar como lido' },
+          { key: 'maskAsUnread', label: 'Marcar como não lido' },
+          { key: 'total', label: 'Total' },
+          { key: 'delete', label: 'Apagar' }
+        ]
+        $scope.search = function(field, param) {
+          // console.log(field, param)
+          $scope.query = { searchFields: [field], q: param }
+          $scope.destinos.methods.search(field,param)
+        }
+        $scope.advancedSearch = function(param) {
+          $scope.query = {aq: param.hql}
+          $scope.destinos.methods.advancedSearch(param)
+        }
+        $scope.action = function(queryaction) {
+          if ($scope.beyond && ($scope.query || !$scope.query)) {
+            $http.post('http://192.168.25.200:8084/viagem-api/api/destino/queryaction', queryaction)
+              .then(function(response) {
+                $scope.destinos.methods.get($scope.page)
+              })
+          } else {
+            $http.post('http://192.168.25.200:8084/viagem-api/api/destino/selectedaction', queryaction)
+              .then(function(response) {
+                $scope.destinos.methods.get($scope.page)
+              })
+          }
+        }
+        var DestinosService = new GumgaRest('http://192.168.25.200:8084/viagem-api/api/destino');
+        gumgaController.createRestMethods($scope, DestinosService, 'destinos');
+        $scope.destinos.methods.get()
+
+        $scope.tableConfig = {
+          columns: 'nome, view',
+          // headers: false,
+          checkbox: true,
+          selection: "multi",
+          columnsConfig: [
+            {
+              name: 'nome',
+              title: 'Nome',
+              content: '{{$value.nome}}',
+              sortField: 'nome'
+            },
+            {
+              name: 'view',
+              title: ' ',
+              content: '<span class="pull-right"><a uib-tooltip="View" class="btn btn-primary btn-sm" ui-sref="gumgaController.view({id: $value.id })"><i class="glyphicon glyphicon-eye-open"></i></a></span>'
+            }
+          ]
+        }
+      }])
+  </script>
+</body>
+
+</html>

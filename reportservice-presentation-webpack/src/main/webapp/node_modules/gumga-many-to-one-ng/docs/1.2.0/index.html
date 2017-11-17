@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-many-to-one-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+    <!--<link rel="stylesheet" href="https://gumga.github.io/layout/dist/gumga-layout.css">-->
+
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-many-to-one-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-6">
+          <h2>Descrição</h2>
+          <p>O componente gumga-many-to-one-ng é utilizado para filtrar uma lista de registros dinâmicamente. Ele também permite adicionar um registro caso a busca retorne uma lista vazia e visualizar os atributos do registro selecionado.</p>
+        </div>
+        <div class="col-xs-6">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-many-to-one-ng --save
+
+// bower
+bower install gumga-many-to-one-ng --save
+
+// HTML
+&lt;script src="node_modules/gumga-many-to-one-ng/dist/gumga-many-to-one.min.js">&lt;/script>
+// ou
+&lt;script src="bower_components/gumga-many-to-one-ng/dist/gumga-many-to-one.min.js">&lt;/script>
+</code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Usando
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6">
+              <form name="manytoone">
+              <gumga-many-to-one
+                value="produto"
+                list="produtos"
+                search-method="getSearch(param)"
+                field="nome"
+                authorize-add="false"
+                on-deselect="deselectCallback(value)"
+                async="false"
+                display-info="false">
+                <match>
+                  <div>{{match.model.nome}}</div>
+                </match>
+              </gumga-many-to-one>
+              </form>
+            </div>
+            <div class="col-xs-6">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#html" aria-controls="html" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation"><a href="#js" aria-controls="js" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="html">
+                  <pre><code class="prettyprint" ng-non-bindable>&lt;form name="manytoone">
+  &lt;gumga-many-to-one
+    value="produto"
+    list="produtos"
+    search-method="getSearch(param)"
+    field="nome"
+    authorize-add="false"
+    on-deselect="deselectCallback(value)"
+    async="false"
+    display-info="false">
+    &lt;match>
+      &lt;div>{{match.model.nome}}&lt;/div>
+    &lt;/match>
+  &lt;/gumga-many-to-one>
+&lt;/form></code></pre>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="js">
+                  <pre><code class="prettyprint">angular.module('app', ['ui.bootstrap', 'gumga.manytoone'])
+  .controller('Ctrl', function($scope){
+    $scope.produtos = [
+      { nome: 'Notebook Acer Aspire', id: 1 },
+      { nome: 'Motorola Moto X (2a Geração) 32GB', id: 2 },
+      { nome: 'Smart TV LED 43" Samsung', id: 3 },
+      { nome: 'Ar Condicionado Split 7000 BTU/s', id: 4 }
+    ];
+
+    $scope.produto = $scope.produtos[1];
+
+    $scope.deselectCallback = function(value){
+      console.log(value);
+    }
+
+    // Este método precisa ser assíncrono
+    $scope.getSearch = function(param){
+        return $q(function(resolve){
+            var arr = $scope.produtos.filter(function(produto){
+              return produto.nome.indexOf(param) != -1;
+            })
+            resolve(arr);
+        })
+    };
+  })</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Atributos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Parâmetro</th>
+              <th>Tipo</th>
+              <th>Requerido</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>value</strong></td>
+              <td><code>Object</code></td>
+              <td>Sim</td>
+              <td>Binding com o registro selecionado na lista.</td>
+            </tr>
+            <tr>
+              <td><strong>list</strong></td>
+              <td><code>Array</code></td>
+              <td>Sim</td>
+              <td>Lista dos registros que serão buscados.</td>
+            </tr>
+            <tr>
+              <td><strong>field</strong></td>
+              <td><code>String</code></td>
+              <td>Sim</td>
+              <td>Atributo do registro que está sendo procurado e o que estará na lista.</td>
+            </tr>
+            <tr>
+              <td><strong>description</strong></td>
+              <td><code>String</code></td>
+              <td>Não</td>
+              <td>atributo de uma possível descrição.</td>
+            </tr>
+            <tr>
+              <td><strong>search-method</strong></td>
+              <td><code>Function</code></td>
+              <td>Sim</td>
+              <td>Busca assíncrona<code>search-method="getSearch(param)"</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>authorize-add</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Mostrar o botão de adicionar um registro caso a busca não tenha retornado nenhum registro.</td>
+            </tr>
+            <tr>
+              <td><strong>async</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Controle para o <code>post-method</code>, caso <code>true</code>, faça o post, se <code>false</code> fará apenas o push.</td>
+            </tr>
+            <tr>
+              <td><strong>post-method</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Dependendo do parâmetro <code>async</code>, chamará a função com o parâmetro <code>post-method="post(value)"</code> e caso o parâmetro <code>async</code> não esteja presente ou seja falso, fará um push na lista.</td>
+            </tr>
+            <tr>
+              <td><strong>disabled</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Habilitar ou desabilitar o componente.</td>
+            </tr>
+            <tr>
+              <td><strong>async</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Controle para o <code>post-method</code>, caso <code>true</code>, faça o post, se <code>false</code> fará apenas o push.</td>
+            </tr>
+            <tr>
+              <td><strong>display-info</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Mostrar o botão agrupado ao input e ícones na lista de resultados, que mostra os dados do resultado.</td>
+            </tr>
+            <tr>
+              <td><strong>on-select</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Executada quando o usuário selecionar um resultado, o parâmetro value é obrigatório.</td>
+            </tr>
+            <tr>
+              <td><strong>on-deselect</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Executada quando o usuário desmarcar o registro, essa função recebe o atributo value que é o objeto que foi retirado.</td>
+            </tr>
+            <tr>
+              <td><strong>tab-seq</strong></td>
+              <td><code>Number</code></td>
+              <td>Não</td>
+              <td>Equivalente ao tabindex, foi usado tabseq para que o elemento many-to-one, não fique na lista de tabindex.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/gumga-populate-ng@1.0.0/dist/gumga-populate.min.js"></script>
+    <script src="dist/gumga-many-to-one.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>

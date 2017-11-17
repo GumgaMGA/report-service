@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://gumga.github.io/layout/dist/gumga-layout.css">
+</head>
+
+
+<body data-ng-controller="ctrl">
+  <div class="gumga-layout">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <h1>Gumga Form</h1>
+        <form name="form" novalidate>
+          <div class="form-group">
+            <input type="text" class="gmd form-control" autocomplete="off" name="name" ng-model="person" placeholder="Seu nome" required>
+          </div>
+
+          <gumga-form-buttons
+                valid="form.$valid"
+                class="gmd"
+                class-save="raised"
+                class-cancel="raised"
+                back="person.list"
+                submit="foo()"
+                continue="{{!$stateParams.id}}"
+                confirm-dirty="{{true}}">
+          </gumga-form-buttons>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="../node_modules/angular/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.4.2/angular-ui-router.min.js"></script>
+  <script src="../dist/gumga-form-buttons.js"></script>
+  <script>
+    angular
+      .module('app', ['ui.bootstrap','gumga.formbuttons'])
+      .config(function ($httpProvider) {
+      })
+      .controller('ctrl', [function () {
+      }])
+  </script>
+</body>
+
+</html>
