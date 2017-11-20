@@ -47,6 +47,6 @@ public class ApplicationConstants implements GumgaValues {
 
     @Override
     public String getSoftwareName() {
-        return "io.gumga.reportservicefelipe";
+        return "io.gumga.reportservice";
     }
 }

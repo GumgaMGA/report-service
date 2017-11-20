@@ -49,7 +49,8 @@ public class SecurityIntegration {
             new OperationExpression("R-GUMGAREPORT", BASE + ".gumgareport.*", "GET"),
             new OperationExpression("C-GUMGAREPORT", BASE + ".gumgareport.*", "POST"),
             new OperationExpression("U-GUMGAREPORT", BASE + ".gumgareport.*", "PUT"),
-            new OperationExpression("D-GUMGAREPORT", BASE + ".gumgareport.*", "DELETE")
+            new OperationExpression("D-GUMGAREPORT", BASE + ".gumgareport.*", "DELETE"),
+            new OperationExpression("CRUD-GUMGAREPORT", BASE + ".*", ".*")
     );
 
     /**
