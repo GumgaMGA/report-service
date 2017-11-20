@@ -1,5 +1,6 @@
 package io.gumga.reportservice.configuration.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.gumga.core.GumgaThreadScope;
 import io.gumga.core.GumgaValues;
 import io.gumga.core.UserAndPassword;
@@ -46,7 +47,9 @@ public class SecurityIntegration {
      */
     public static final List<OperationExpression> operations = Arrays.asList(
             new OperationExpression("R-GUMGAREPORT", BASE + ".gumgareport.*", "GET"),
-            new OperationExpression("CUD-GUMGAREPORT", BASE + ".gumgareport.*", ".*")
+            new OperationExpression("C-GUMGAREPORT", BASE + ".gumgareport.*", "POST"),
+            new OperationExpression("U-GUMGAREPORT", BASE + ".gumgareport.*", "PUT"),
+            new OperationExpression("D-GUMGAREPORT", BASE + ".gumgareport.*", "DELETE")
     );
 
     /**

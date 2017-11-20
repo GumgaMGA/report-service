@@ -1,6 +1,8 @@
 package io.gumga.reportservice.configuration.security;
 
 import io.gumga.reportservice.configuration.application.ApplicationConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,8 @@ public class RegisterApplication {
     @Autowired
     private ApplicationConstants applicationConstants;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RegisterApplication.class);
+
     private Map software;
     private Map organization;
     private Map token = new HashMap();
@@ -31,14 +35,18 @@ public class RegisterApplication {
     }
 
     public void register() {
-        headers = new HttpHeaders();
-        headers = securityIntegration.eternalToken();
-        token = securityIntegration.token(headers.get("gumgaToken").get(0));
-        organization = securityIntegration.organizationFatByOi((String) token.get("organizationHierarchyCode"));
-        software = createSoftware();
-        instance = createinstanceBySoftware();
-        createRole();
-        securityIntegration.newObjectOperationGroup(headers, "Operations to " + ((Map) software.get("url")).get("value"));
+        try {
+            headers = new HttpHeaders();
+            headers = securityIntegration.eternalToken();
+            token = securityIntegration.token(headers.get("gumgaToken").get(0));
+            organization = securityIntegration.organizationFatByOi((String) token.get("organizationHierarchyCode"));
+            software = createSoftware();
+            instance = createinstanceBySoftware();
+            createRole();
+            securityIntegration.newObjectOperationGroup(headers, "Operations to " + ((Map) software.get("url")).get("value"));
+        } catch (Exception e) {
+            LOGGER.warn("Some errors were detected on register in security.");
+        }
     }
 
     public Map createSoftware() {
