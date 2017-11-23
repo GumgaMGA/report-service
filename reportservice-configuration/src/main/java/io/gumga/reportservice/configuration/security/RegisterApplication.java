@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by willian on 16/11/17.
@@ -66,6 +66,18 @@ public class RegisterApplication {
             software.put("url", value);
             software.put("softwareValues", new ArrayList<>());
             map = securityIntegration.createSoftware(headers, software);
+        } else {
+            securityIntegration.checkOperationsSoftware(headers, (String) map.get("name"), SecurityIntegration.getOperations().stream()
+            .map(op -> {
+                HashMap<String, Object> ob = new HashMap<>();
+                ob.put("name", op.name);
+                ob.put("description", op.description);
+                ob.put("thousandValue", op.thousandValue);
+                ob.put("basicOperation", op.basicOperation);
+                ob.put("billed", op.billed);
+                ob.put("key", op.key);
+                return ob;
+            }).collect(Collectors.toList()));
         }
         return map;
     }

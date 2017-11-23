@@ -1,6 +1,5 @@
 package io.gumga.reportservice.configuration.security;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.gumga.core.GumgaThreadScope;
 import io.gumga.core.GumgaValues;
 import io.gumga.core.UserAndPassword;
@@ -50,6 +49,7 @@ public class SecurityIntegration {
             new OperationExpression("C-GUMGAREPORT", BASE + ".gumgareport.*", "POST"),
             new OperationExpression("U-GUMGAREPORT", BASE + ".gumgareport.*", "PUT"),
             new OperationExpression("D-GUMGAREPORT", BASE + ".gumgareport.*", "DELETE"),
+            new OperationExpression("D-teste", BASE + ".caga.*", "DELETE"),
             new OperationExpression("CRUD-GUMGAREPORT", BASE + ".*", ".*")
     );
 
@@ -65,6 +65,7 @@ public class SecurityIntegration {
             op.add(gumgaOperationTO);
         }
 
+        op.addAll(SecurityHelper.listMyOperations("io.gumga"));
         op.addAll(SecurityHelper.listMyOperations(""));
         return op;
     }
@@ -258,6 +259,13 @@ public class SecurityIntegration {
         try {
             headers.set("gumgaToken", propertiesService.tokenEternoSecurity());
             String url = propertiesService.operationGroup();
+
+            Map existents = restTemplate().exchange(url + "?aq=obj.name = '" + grupoOperacoes.get("name") + "'", HttpMethod.GET, new HttpEntity<Object>(headers), Map.class).getBody();
+
+            if (((Integer) existents.get("count")) > 0) {
+                return (Map) ((List) existents.get("values")).get(0);
+            }
+
             result = (Map) restTemplate().exchange(url, HttpMethod.POST, new HttpEntity<>(grupoOperacoes, headers), Map.class).getBody().get("data");
         } catch (Exception e) {
             e.printStackTrace();
@@ -543,6 +551,20 @@ public class SecurityIntegration {
         final String url = propertiesService.software();
         software = restTemplate().exchange(url, HttpMethod.POST, new HttpEntity<>(software, headers), Map.class).getBody();
         return (Map) software.get("data");
+    }
+
+    /**
+     * Cria software
+     *
+     * @param headers Cabeçalho para requisição (ex: gumgaToken)
+     * @return Software
+     */
+    public void checkOperationsSoftware(final HttpHeaders headers, String softwareName, List operationsOfSoftware) {
+        final String url = propertiesService.software() + "/check-operations";
+        Map obj = new HashMap();
+        obj.put("softwareName", softwareName);
+        obj.put("operations", operationsOfSoftware);
+        restTemplate().exchange(url, HttpMethod.POST, new HttpEntity<>(obj, headers), Object.class);
     }
 
     /**

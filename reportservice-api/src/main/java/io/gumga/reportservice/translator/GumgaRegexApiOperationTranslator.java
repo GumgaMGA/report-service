@@ -3,7 +3,6 @@ package io.gumga.reportservice.translator;
 import io.gumga.reportservice.configuration.security.OperationExpression;
 import io.gumga.reportservice.configuration.security.SecurityIntegration;
 import io.gumga.security.ApiOperationTranslator;
-import io.gumga.security.GumgaOperationTO;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
