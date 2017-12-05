@@ -80,18 +80,18 @@
       })
       .controller('restCtrl', ['gumgaController', 'GumgaRest', '$scope', '$http', '$q',
         function (gumgaController, GumgaRest, $scope, $http, $q) {
-          var PessoaService = new GumgaRest('https://gumga.io/security-api/api/user');
+          var PessoaService = new GumgaRest('http://192.168.253.246:8084/security-api/api/user', 4);
           gumgaController.createRestMethods($scope, PessoaService, 'pessoa');
 
-          $scope.pessoa.methods.getLatestOperation();
+          $scope.pessoa.methods.get(1, 4);
 
           $scope.tableConfig = {
           columns: 'id, name, login',
           // itemsPerPage: [5, 10],
           checkbox: true,
-          disabledRow: function(row){
-            return row.id == 3 || row.id == 7 || row.id == 16 || row.name == 'GumgaAdmin'
-          },
+          // disabledRow: function(row){
+          //   return row.id == 3 || row.id == 7 || row.id == 16 || row.name == 'GumgaAdmin'
+          // },
           materialTheme: true,
           // activeLineColor: 'red',
           // hoverLineColor: 'red',

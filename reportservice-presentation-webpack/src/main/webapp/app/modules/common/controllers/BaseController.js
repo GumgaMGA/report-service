@@ -1,6 +1,5 @@
 
 const BaseController = ($timeout, $sce, BaseService, $state, $scope, gumgaController, $filter, $compile, GumgaWebStorage) => {
-    document.querySelector('.gumga-layout nav.gl-nav').classList.remove('collapsed')
     $scope.keysJsonUrl = []
     $scope.gumgaMenu = []
     $scope.organizations = []
@@ -9,9 +8,26 @@ const BaseController = ($timeout, $sce, BaseService, $state, $scope, gumgaContro
 
     $scope.orgAtual = JSON.parse(sessionStorage.getItem('user'))
 
+    function getItemByName(menu, key, callback){
+        menu.forEach(function(item){
+            if(item.state == key){
+                callback(item);
+            }else{
+                if(item.children){
+                    return getItemByName(item.children, key, callback);
+                }
+            }
+        })
+    }
+
+    $scope.getTitlePage = (menu) => {
+        getItemByName(menu, $state.current.name, item => $scope.title = item.label);
+    }
+
     BaseService.getGumgaMenu()
         .then(function(response) {
-            $scope.gumgaMenu = response.data
+            $scope.gumgaMenu = response.data;
+            $scope.getTitlePage($scope.gumgaMenu);
         })
 
     BaseService.getKeysJsonUrl()
@@ -22,11 +38,7 @@ const BaseController = ($timeout, $sce, BaseService, $state, $scope, gumgaContro
     BaseService.listOrganizations()
         .then(function(response) {
             $scope.organizations = response.data
-        })
-
-    $scope.navCollapse = function () {
-        document.querySelector('.gumga-layout nav.gl-nav').classList.toggle('collapsed')
-    }
+        });
 
     $scope.changeOrganization = function(organization) {
         BaseService.changeOrganization(organization.id)

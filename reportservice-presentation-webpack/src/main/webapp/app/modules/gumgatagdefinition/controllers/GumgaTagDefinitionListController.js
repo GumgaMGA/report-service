@@ -26,7 +26,7 @@ const GumgaTagDefinitionListController = ($scope, GumgaTagDefinitionService, gum
     }
 
     $scope.action = (queryaction) => {
-        console.log(queryaction);
+        // console.log(queryaction);
     }
 
     $scope.tableConfig = {

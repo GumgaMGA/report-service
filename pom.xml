@@ -348,7 +348,7 @@
 
             <dependency>
                 <groupId>oracle</groupId>
-                <artifactId>ojdbc6</artifactId>
+                 <artifactId>ojdbc6</artifactId>
                 <version>${ojdbc6.version}</version>
             </dependency>
 
@@ -379,6 +379,6 @@
     <module>reportservice-api</module>
     <module>reportservice-boot</module>
     
-    <!--<module>reportservice-presentation-webpack</module>-->
+    <module>reportservice-presentation-webpack</module>
   </modules>
 </project>

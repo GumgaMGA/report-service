@@ -25,7 +25,7 @@ const GumgaCustomFieldListController = ($scope, GumgaCustomFieldService, gumgaCo
     }
 
     $scope.action = function(queryaction) {
-        console.log(queryaction);
+        // console.log(queryaction);
     }
 
   $scope.tableConfig = {

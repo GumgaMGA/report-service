@@ -12,6 +12,17 @@
   ,"edit": "Editar Coisa"
   ,"insert": "Inserir Coisa"
   }
+    ,"gumgareport":{
+        "title":"GumgaReport"
+        ,"menulabel": "GumgaReport"
+        ,"edit": "Editar GumgaReport"
+        ,"insert": "Inserir GumgaReport"
+        ,"list": "Consulta GumgaReport"
+        ,"id": "id"
+        ,"id":"Id"
+        ,"teste":"Teste"
+    }
+
 ,"address": {
   "cep": "CEP"
 ,"numero": "Número"

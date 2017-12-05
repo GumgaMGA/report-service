@@ -37,7 +37,11 @@ module.exports = {
            $: "jquery",
            jQuery: "jquery",
            "window.jQuery": "jquery"
-       })
+        }),
+	new webpack.EnvironmentPlugin({
+            NODE_ENV: 'production',
+            DEBUG: false
+        })
     ],
     module: {
         rules: [

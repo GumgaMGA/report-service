@@ -31,6 +31,13 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 }
+body, html{
+	width: 100%;
+    height: 100%;
+}
+.gl-header div.navbar-header{
+    height: 51px;
+}
 ol, ul {
 	list-style: none;
 }
@@ -48,4 +55,36 @@ table {
 }
 .uib-datepicker-popup.dropdown-menu  {
 	width: auto;
+}
+.form-control.gmd~label{
+	font-size: 1rem !important;
+    line-height: 1.42857143;
+}
+/*STIMULSOFT*/
+.stiDesignerClearAllStyles img{
+    border-radius: 0px !important;
+}
+.stiDesignerFileMenu img {
+    border: 0px;
+}
+gumga-report td {
+    vertical-align: middle !important;
+}
+.stiDesignerClearAllStyles td{
+    text-transform: none;
+}
+.stiDesignerToolBar, .stiDesignerToolButtonCell, .StiDesignerpreviewToolButton, .stiDesignerToolButton_Mouse {
+    background: #009688 !important;
+    background-color: #009688 !important;
+}
+.stiJsViewerPageShadow > div {
+    display: none;
+}
+
+gumga-report > div {
+	box-shadow: 0 2px 4px -1px rgba(0,0,0,.2),0 4px 5px 0 rgba(0,0,0,.14),0 1px 10px 0 rgba(0,0,0,.12)
+}
+
+body {
+	background: #ECEFF1 !important;
 }

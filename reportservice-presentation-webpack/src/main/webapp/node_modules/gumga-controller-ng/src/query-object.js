@@ -103,12 +103,15 @@ export class QueryObject {
         if(!this.service.sendQueryObject){
             console.error("Precisamos que você atualize a versão do componente gumga-rest-ng, acesse: https://github.com/GUMGA/gumga-rest-ng/releases");
         }
+        this.queryObject.searchCount = this.controller.page <= 1;
         return this.service.sendQueryObject(this.queryObject)
                  .then(
                      resp => {
                         this.controller.data = resp.data.values;
                         this.controller.pageSize = resp.data.pageSize;
-                        this.controller.count = resp.data.count;
+                        if(resp.data.count > 0 && this.controller.page <= 1){
+                            this.controller.count = resp.data.count;
+                        }
                         return resp;
                      }
                  );

@@ -30,11 +30,13 @@ let Facebook = {
     let scopes = ctrl.scopes
     || 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/userinfo.email';
 
-    GooglePlus.init({
-        clientId: ctrl.clientId,
-        apiKey: ctrl.appKey,
-        scopes: scopes
-     });
+    ctrl.$onInit = () => {
+      GooglePlus.init({
+          clientId: ctrl.clientId,
+          apiKey: ctrl.appKey,
+          scopes: scopes
+       });
+    }
 
     ctrl.submit = () => {
       GooglePlus.login().then(function (authResult) {

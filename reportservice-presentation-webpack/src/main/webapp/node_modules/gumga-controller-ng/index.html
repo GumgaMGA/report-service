@@ -70,7 +70,7 @@
       })
       .controller('restCtrl', ['gumgaController', 'GumgaRest', '$scope', '$http', '$q',
         function (gumgaController, GumgaRest, $scope, $http, $q) {
-          var PessoaService = new GumgaRest('https://gumga.io/security-api/api/user');
+          var PessoaService = new GumgaRest('http://192.168.253.246:8084/security-api/api/user');
 
           gumgaController.createRestMethods($scope, PessoaService, 'pessoa');
 
@@ -78,12 +78,12 @@
             $scope.pessoa.methods.createQuery()
                        .pageSize(pageSize)
                        .page(page)
-                       .sort(field, dir)
-                       .gQuery(new GQuery(new Criteria('name', ComparisonOperator.CONTAINS, 'ma')))
+                      //  .sort(field, dir)
+                      //  .gQuery(new GQuery(new Criteria('name', ComparisonOperator.CONTAINS, 'ma')))
                        .send();
           }
 
-          $scope.buscar(1, 5, 'name', 'desc');
+          $scope.buscar(1, 4, 'name', 'desc');
 
           $scope.tableConfig = {
           columns: 'id, name, login',

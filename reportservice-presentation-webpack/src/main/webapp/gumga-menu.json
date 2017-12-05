@@ -1,6 +1,15 @@
 [
 	{
 		"type": "item",
+		"label": "GumgaReport",
+		"key": "CRUD-GumgaReport",
+		"icon":  "label", 
+ 		"state": "gumgareport.list",
+		"children": []
+	},
+
+	{
+		"type": "item",
 		"label": "Welcome",
 		"state": "welcome.home",
 		"icon": "home",

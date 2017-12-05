@@ -117,7 +117,7 @@ import { QueryObject } from './query-object';
             self.emit('getSuccess', data.data);
             self.data = data.data.values;
             self.pageSize = data.data.pageSize;
-            self.count = data.data.count;
+            if(data.data.count > 0 && page <= 1) self.count = data.data.count;
             self.storage.set('pageSize', data.data.pageSize);
             self.data.map(record => self.records.push(record.id))
           }, (err) => { self.emit('getError', err); })
@@ -186,7 +186,7 @@ import { QueryObject } from './query-object';
             self.emit('sortSuccess', data.data);
             self.data = data.data.values;
             self.pageSize = data.data.pageSize;
-            self.count = data.data.count;
+            if(data.data.count > 0 && page <= 1) self.count = data.data.count;
             self.storage.set('pageSize', data.data.pageSize);
           }, (err) => { self.emit('sortError', err); })
         return self;
@@ -203,7 +203,7 @@ import { QueryObject } from './query-object';
             self.emit('searchSuccess', data.data);
             self.data = data.data.values;
             self.pageSize = data.data.pageSize;
-            self.count = data.data.count;
+            if(data.data.count > 0 && page <= 1) self.count = data.data.count;
             self.storage.set('pageSize', data.data.pageSize);
           }, (err) => { self.emit('searchError', err); })
         return self;
@@ -220,7 +220,7 @@ import { QueryObject } from './query-object';
             self.emit('advancedSearchSuccess', data.data);
             self.data = data.data.values;
             self.pageSize = data.data.pageSize;
-            self.count = data.data.count;
+            if(data.data.count > 0 && page <= 1) self.count = data.data.count;
             self.storage.set('pageSize', data.data.pageSize);
           }, (err) => { self.emit('advancedSearchError', err); })
         return self;
@@ -236,7 +236,7 @@ import { QueryObject } from './query-object';
             self.emit('searchWithGQuerySuccess', data.data);
             self.data = data.data.values;
             self.pageSize = data.data.pageSize;
-            self.count = data.data.count;
+            if(data.data.count > 0 && page <= 1) self.count = data.data.count;
           }, (err) => { self.emit('searchWithGQueryError', err); })        
       },
       asyncSearchWithGQuery(gQuery, page, pageSize){
@@ -249,7 +249,7 @@ import { QueryObject } from './query-object';
           .then((data) => {
             self.emit('asyncSearchWithGQuery', data.data);
             self.pageSize = data.data.pageSize;
-            self.count = data.data.count;
+            if(data.data.count > 0 && page <= 1) self.count = data.data.count;
             return data.data.values
           }, (err) => { self.emit('asyncSearchWithGQuery', err); })        
       },
@@ -261,7 +261,7 @@ import { QueryObject } from './query-object';
             self.emit('redoSearchSuccess', data.data);
             self.data = data.data.values;
             self.pageSize = data.data.pageSize;
-            self.count = data.data.count;
+            if(data.data.count > 0 && page <= 1) self.count = data.data.count;
           }, (err) => { self.emit('redoSearchError', err); })
         return self;
       },

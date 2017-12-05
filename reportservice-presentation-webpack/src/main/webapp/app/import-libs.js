@@ -1,3 +1,6 @@
+require("script-loader!../node_modules/gumga-report-ng/dist/stimulsoft/js/stimulsoft.reports.pack");
+require("script-loader!../node_modules/gumga-report-ng/dist/stimulsoft/js/stimulsoft.viewer.pack");
+require("script-loader!../node_modules/gumga-report-ng/dist/stimulsoft/js/stimulsoft.designer.pack");
 require("script-loader!../node_modules/jquery/dist/jquery.min.js");
 require("script-loader!../node_modules/angular/angular.min");
 require("script-loader!../node_modules/angular-mocks/angular-mocks");
@@ -7,12 +10,12 @@ require("script-loader!../node_modules/@uirouter/angularjs/release/angular-ui-ro
 require("script-loader!../node_modules/bootstrap/dist/js/bootstrap.min");
 require("script-loader!../node_modules/es5-shim/es5-shim.min");
 require("script-loader!../resources/javascript/bootstrap-notify.min");
-require("script-loader!../app/apiLocations");
 require("script-loader!../node_modules/mousetrap/mousetrap.min");
 require("script-loader!../node_modules/ng-img-crop/compile/minified/ng-img-crop");
 require("script-loader!../node_modules/moment/min/moment.min");
 require("script-loader!../gumga-layout/gumga-layout.min");
 require("script-loader!../node_modules/gumga-login/dist/gumga-login.min");
+require("script-loader!../node_modules/sweetalert/dist/sweetalert.min");
 require("script-loader!../i18n/angular-locale_pt-br");
 require("script-loader!../node_modules/moment-timezone/builds/moment-timezone-with-data.min");
 require("script-loader!../node_modules/gumga-rest-ng/dist/gumga-rest.min");
@@ -39,3 +42,4 @@ require("script-loader!../node_modules/gumga-list-ng/dist/gumga-list.min");
 require("script-loader!../node_modules/gumga-date-ng/dist/gumga-date.min");
 require("script-loader!../node_modules/gumga-query-action-ng/dist/gumga-query-action.min");
 require("script-loader!../node_modules/my-account-embedded/dist/my-profile-embedded.min");
+require("script-loader!../node_modules/gumga-report-ng/dist/gumga-report-ng");
