@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="yourApp">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://gumga.github.io/layout/dist/gumga-layout.min.css">-->
+
+    <style>
+      /*gumga-many-to-one.gmd .dropdown-menu {
+      padding: 0;
+      border-width: 0 1 1;
+      border-color: #fff;
+      border-radius: 0;
+      -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.175);
+      box-shadow: 0 2px 4px rgba(0,0,0,.175);
+      width: 100%;
+    }
+    gumga-many-to-one.gmd input[type="text"],
+    gumga-many-to-one.gmd button {
+      background: transparent !important;
+    }
+    gumga-many-to-one.gmd button {
+      border-width: 0 1 1px;
+      border-color: #ccc;
+    }*/
+    </style>
+
+</head>
+
+<body ng-controller="restCtrl">
+
+  <div class="container">
+    <h3>Para o funcionamento do exemplo a seguir é necessária a instalação dos componentes:</h3>
+    <ul>
+      <li>Gumga Rest</li>
+      <li>Gumga Controller</li>
+    </ul>
+    <pre>
+  npm install gumga-rest-ng
+  npm install gumga-controller-ng
+  // ou
+  boewr install gumga-rest-ng
+  boewr install gumga-controller-ng
+  </pre>
+    <div class="row">
+      <form name="Example">
+        <div class="col-md-12">
+          <gumga-list sort="pessoa.methods.sort(field, dir, pageSize)"
+                      data="pessoa.data"
+                      selected-values="mateus"
+                      name="pessoa"
+                      configuration="tableConfig"
+                      page-size="pessoa.pageSize"
+                      page-position="bottom"
+                      page-align="flex-end"
+                      count="pessoa.count"
+                      page-model="page"
+                      on-page-change="pessoa.methods.get(page, pageSize)"
+            ></gumga-list>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="node_modules/angular/angular.min.js"></script>
+  <script src="./dist/gumga-rest.js"></script>
+  <script src="node_modules/gumga-controller-ng/dist/gumga-controller.js"></script>
+  <script src="node_modules/gumga-list-ng/dist/gumga-list.js"></script>
+
+  <script>
+    angular.module('yourApp', ['gumga.rest','gumga.controller','gumga.list'])
+      .config(function ($httpProvider) {
+        $httpProvider.defaults.headers.common['gumgaToken'] = 'eterno'
+      })
+      .controller('restCtrl', ['gumgaController', 'GumgaRest', '$scope', '$http', '$q',
+        function (gumgaController, GumgaRest, $scope, $http, $q) {
+          var PessoaService = new GumgaRest('https://gumga.io/security-api/api/user');
+          gumgaController.createRestMethods($scope, PessoaService, 'pessoa');
+
+          $scope.pessoa.methods.getLatestOperation();
+
+          $scope.tableConfig = {
+          columns: 'id, name, login',
+          // itemsPerPage: [5, 10],
+          checkbox: true,
+          disabledRow: function(row){
+            return row.id == 3 || row.id == 7 || row.id == 16 || row.name == 'GumgaAdmin'
+          },
+          materialTheme: true,
+          // activeLineColor: 'red',
+          // hoverLineColor: 'red',
+          ordination: true,
+          resizable: true,
+          fixed: {
+              head: true,
+              left: 2
+          },
+          selection: "multi",
+          columnsConfig: [
+            {
+              name: 'id',
+              possibleColumn: true,
+              title: 'Codigo',
+              content: '{{$value.id}}',
+              sortField: 'id'
+            },
+            {
+              name: 'name',
+              editable: true,
+              // possibleColumn: true,
+              title: 'Nome completo',
+              content: '{{$value.name}}',
+              sortField: 'name'
+            },
+            {
+              name: 'login',
+              title: 'E-mail',
+              content: '{{$value.login}}',
+              sortField: 'login'
+            },
+            {
+              name: 'view',
+              title: 'Ações',
+              content: ' <span class="pull-right"><a uib-tooltip="View" class="btn btn-primary btn-sm" ui-sref="gumgaController.view({id: $value.id })"><i class="glyphicon glyphicon-eye-open"></i></a></span>'
+            }
+          ]
+        }
+
+        }
+      ])
+  </script>
+</body>
+
+</html>

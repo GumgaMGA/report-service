@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <title>gumga-report-ng</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://gumga.github.io/components/style.css">
+  </head>
+  <body >
+
+    <nav class="navbar navbar-inverse" ng-controller="VersionController as ctrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">gumga-report-ng</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#"
+                 class="dropdown-toggle"
+                 data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ctrl.version}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li ng-repeat="version in ctrl.versions"><a href="../{{version}}">{{version}}</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" ng-controller="Ctrl as ctrl">
+      <div class="row">
+        <div class="col-xs-6">
+          <div class="row">
+              <div class="col-xs-12">
+                  <h2>Descrição</h2>
+                  <p>O componente gumgaReport foi criado no intuito de facilitar o desenvolvimento de relatórios utilizando a ferramenta Stimulsoft.</p>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-xs-12">
+                  <h3>Observações</h3>
+                  <p>Como este componente depende diretamente da aplicação Stimulsoft, é necessário fazer a Importação dos arquivos 
+                      javascript e css que estão no diretório de instalação do componente. No exemplo de instalação ao lado está descrito
+                      também o caminho do arquivo de estilização do visualizador e do editor, entretanto é possível utilizar outros temas conforme
+                      desejado, pois os mesmos podem ser encontrados dentro do diretório listado <i>(gumga-report-ng/dist/stimulsoft/css/**temas**)</i>.
+                      <b>Utilize 'obj' como alias para suas consultas SQL, para que ocorra a filtragem pelo ID da organização.</b>
+                  </p>
+              </div>
+          </div>
+        </div>
+        <div class="col-xs-6">
+          <h3>Instalação</h3>
+          <pre><code class="prettyprint">// npm
+npm i gumga-report-ng --save
+
+// bower
+bower install gumga-report-ng --save
+
+// Injeção do modulo
+angular.module('yourApp', ['gumga.report']);
+
+// Importação das dependências do componente pelo npm
+//------------------- Arquivos do stimulsoft ------------------//
+&lt;script src="node_modules/gumga-report-ng/dist/stimulsoft/js/stimulsoft.reports.pack.js">&lt;/script>
+
+&lt;script src="node_modules/gumga-report-ng/dist/stimulsoft/js/stimulsoft.viewer.pack.js">&lt;/script>
+
+&lt;script src="node_modules/gumga-report-ng/dist/stimulsoft/js/stimulsoft.designer.pack.js">&lt;/script>
+
+&lt;link rel="stylesheet" href="node_modules/gumga-report-ng/dist/stimulsoft/css/stimulsoft.designer.office2013.darkgrayteal.css">
+
+&lt;link rel="stylesheet" href="node_modules/gumga-report-ng/dist/stimulsoft/css/stimulsoft.viewer.office2013.darkgrayteal.css">
+
+//------------------------- Componente ------------------------//
+&lt;script src="node_modules/gumga-report-ng/dist/gumga-report-ng.min.js"&gt;&lt;/script&gt;
+
+// Importação das dependências do componente pelo bower
+//-------------------- Arquivos do stimulsoft -----------------//
+&lt;script src="bower_components/gumga-report-ng/dist/stimulsoft/js/stimulsoft.reports.pack.js">&lt;/script>
+
+&lt;script src="bower_components/gumga-report-ng/dist/stimulsoft/js/stimulsoft.viewer.pack.js">&lt;/script>
+
+&lt;script src="bower_components/gumga-report-ng/dist/stimulsoft/js/stimulsoft.designer.pack.js">&lt;/script>
+
+&lt;link rel="stylesheet" href="bower_components/gumga-report-ng/dist/stimulsoft/css/stimulsoft.designer.office2013.darkgrayteal.css">
+
+&lt;link rel="stylesheet" href="bower_components/gumga-report-ng/dist/stimulsoft/css/stimulsoft.viewer.office2013.darkgrayteal.css">
+
+//------------------------- Componente ------------------------//
+&lt;script src="bower_components/gumga-report-ng/dist/gumga-report-ng.min.js"&gt;&lt;/script> </code></pre>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Como utilizar
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <gumga-report entity="ctrl.gumgareport"  on-save="ctrl.mostra($value)" options="ctrl.options"></gumga-report>
+              <br>
+            </div>
+            <div class="col-xs-12">
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#html" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation"><a href="#js" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="html">
+                  <pre><code  class="prettyprint">
+    &lt;gumga-report 
+        entity="gumgareport" 
+        viewer="visualizacao" 
+        on-save="mostra($value)" 
+        options="options">
+    &lt;/gumga-report">
+
+
+</code></pre>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="js">
+                  <pre><code class="prettyprint">
+                      
+    var api = "http://localhost/minha-api"
+    angular.module('app', ['ngGumgaReport', 'gumga.rest', 'gumga.controller'])
+    .config(function ($httpProvider, $gumgaReportProvider) {
+
+        /** Localização da api **/
+        $gumgaReportProvider.setAPILocation({apiLocation:api})
+        /** Token configurável **/
+        $gumgaReportProvider.setToken('mytoken')
+        /** Licensa do gumga-report **/
+        $gumgaReportProvider.setLicenseKey(null);
+        /** Configuração de tradução do GumgaReportNg **/
+        $gumgaReportProvider.setLocalizationLang('dist/stimulsoft/langs/pt-BR.xml');
+        /** Configuração da rota que será executado as consultas **/
+        $gumgaReportProvider.setUrlReportConnection(api + '/api/genericreport/reportconnection?gumgaToken=mytoken');
+        /** Configuração da rota que será salvo os relatórios **/
+        $gumgaReportProvider.setUrlGumgaReport(api + '/api/gumgareport?gumgaToken=mytoken');
+
+        $httpProvider.defaults.headers.common['gumgaToken'] = 'mytoken'
+    })
+    .controller('ctrl', function($scope, $timeout, $http){
+        $scope.carrega1 = function() {
+            $http.get(api + '/api/gumgareport/' + $scope.id).then(function(resp) {
+            $scope.gumgareport = resp.data
+            })
+        }
+        $http.get(api + '/api/gumgareport/9').then(function(resp) {
+            $scope.gumgareport = resp.data
+        })
+        $scope.options = {height: '940px'}
+    })
+                      
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Atributos
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Parâmetro</th>
+              <th>Tipo</th>
+              <th>Requerido</th>
+              <th>Descrição</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>options</strong></td>
+              <td><code>Object</code></td>
+              <td>Não</td>
+              <td>
+                Com este atributo é possível personalizar opções do Stimulsoft, dentre elas são exemplos: tamanho, disposição, menus, barra de ferramentas, dentre outras.
+                Para visualizar um exemplo de objeto clique aqui
+                <b style="cursor: pointer; color: #366591;" class="glyphicon glyphicon-plus" data-toggle="collapse" data-target="#demo" ></b>.
+                <div id="demo" class="collapse">
+                    <pre>
+                        <code class="prettyprint">
+   let options = {
+        appearance: {
+            defaultUnit: 0,
+            interfaceType: 0,
+            showAnimation: true,
+            showSaveDialog: true,
+            showTooltips: true,
+            showTooltipsHelp: true,
+            fullScreenMode: false,
+            _showLocalization: -1,
+            allowChangeWindowTitle: true
+        },
+        toolbar: {
+            showPreviewButton: true,
+            showSaveButton: true,
+            showAboutButton: false,
+            showFileMenu: true,
+            showFileMenuNew: true,
+            showFileMenuOpen: true,
+            showFileMenuSave: true,
+            showFileMenuSaveAs: true,
+            showFileMenuClose: true,
+            showFileMenuExit: true,
+            showFileMenuReportSetup: true,
+            showFileMenuOptions: true,
+            showFileMenuInfo: true,
+            showFileMenuAbout: true,
+            showSetupToolboxButton: true
+        },
+        bands: {
+            showReportTitleBand: true,
+            showReportSummaryBand: true,
+            showPageHeaderBand: true,
+            showPageFooterBand: true,
+            showGroupHeaderBand: true,
+            showGroupFooterBand: true,
+            showHeaderBand: true,
+            showFooterBand: true,
+            showColumnHeaderBand: true,
+            showColumnFooterBand: true,
+            showDataBand: true,
+            showHierarchicalBand: true,
+            showChildBand: true,
+            showEmptyBand: true,
+            showOverlayBand: true,
+            showTable: true
+        },
+        crossBands: {
+            showCrossTab: true,
+            showCrossGroupHeaderBand: true,
+            showCrossGroupFooterBand: true,
+            showCrossHeaderBand: true,
+            showCrossFooterBand: true,
+            showCrossDataBand: true
+        },
+        components: {
+            showText: true,
+            showTextInCells: false,
+            showRichText: false,
+            showImage: true,
+            showBarCode: true,
+            showShape: true,
+            showPanel: true,
+            showClone: false,
+            showCheckBox: true,
+            showSubReport: true,
+            showZipCode: false,
+            showChart: true
+        },
+        dictionary: {
+            showAdaptersInNewConnectionForm: true,
+            showDictionary: true,
+            dataSourcesPermissions: 15,
+            dataConnectionsPermissions: 15,
+            dataColumnsPermissions: 15,
+            dataRelationsPermissions: 15,
+            businessObjectsPermissions: 15,
+            variablesPermissions: 15,
+            resourcesPermissions: 15
+        },
+        width: "100%",
+        height: "940px",
+        viewerOptions: {
+            appearance: {
+                fullScreenMode: false
+            },
+            toolbar: {
+                visible: true,
+                backgroundColor: { name: 'Empty', _a: 0, _r: 255, _g: 255, _b: 255 },
+                borderColor: { name: 'Empty', _a: 0, _r: 255, _g: 255, _b: 255 },
+                fontColor: { name: 'Empty', _a: 0, _r: 255, _g: 255, _b: 255 },
+                fontFamily: 'Arial',
+                alignment: 3,
+                showButtonCaptions: true,
+                showPrintButton: true,
+                showOpenButton: false,
+                showSaveButton: true,
+                showSendEmailButton: false,
+                showFindButton: true,
+                showBookmarksButton: true,
+                showParametersButton: true,
+                showEditorButton: true,
+                showFullScreenButton: true,
+                showFirstPageButton: true,
+                showPreviousPageButton: true,
+                showCurrentPageControl: true,
+                showNextPageButton: true,
+                showLastPageButton: true,
+                showZoomButton: true,
+                showViewModeButton: true,
+                showDesignButton: false,
+                showAboutButton: true,
+                printDestination: 0,
+                viewMode: 0,
+                multiPageWidthCount: 2,
+                multiPageHeightCount: 2,
+                _zoom: 100,
+                menuAnimation: true,
+                showMenuMode: 0,
+                displayMode: 0
+            },
+            exports: {
+                storeExportSettings: true,
+                showExportDialog: true,
+                showExportToDocument: true,
+                showExportToPdf: true,
+                showExportToXps: false,
+                showExportToPowerPoint: false,
+                showExportToHtml: true,
+                showExportToHtml5: true,
+                showExportToMht: false,
+                showExportToText: false,
+                showExportToRtf: false,
+                showExportToWord2007: true,
+                showExportToOpenDocumentWriter: false,
+                showExportToExcel: false,
+                showExportToExcelXml: false,
+                showExportToExcel2007: true,
+                showExportToOpenDocumentCalc: false,
+                showExportToCsv: true,
+                showExportToDbf: false,
+                showExportToXml: false,
+                showExportToDif: false,
+                showExportToSylk: false,
+                showExportToImageBmp: false,
+                showExportToImageGif: false,
+                showExportToImageJpeg: false,
+                showExportToImagePcx: false,
+                showExportToImagePng: false,
+                showExportToImageTiff: false,
+                showExportToImageMetafile: false,
+                showExportToImageSvg: false,
+                showExportToImageSvgz: false
+            },
+            email: {
+                showEmailDialog: true,
+                showExportDialog: true,
+                defaultEmailAddress: "",
+                defaultEmailSubject: "",
+                defaultEmailMessage: ""
+            },
+            width: "100%",
+            height: "",
+            viewerId: "",
+            requestStylesUrl: "",
+            productVersion: "2017.1.11 from 18 agosto 2017",
+            actions: { exportReport: 1, emailReport: 2 }
+        }
+    }
+                        </code>
+                    </pre>
+                </div>
+                Também é possível encontrar a documentação completa, descrita o que cada propriedade faz, no link <a href="https://www.stimulsoft.com/en/documentation/online/programming-manual/index.html?reports_js.htm" target="_blank">https://www.stimulsoft.com/en/documentation/online/programming-manual/index.html?reports_js.htm</a>
+              </td>
+            </tr>
+            <tr>
+              <td><strong>entity</strong></td>
+              <td><code>Object</code></td>
+              <td>Sim</td>
+              <td>Atributo obrigatório que irá conter o objeto do relatório</td>
+            </tr>
+            <tr>
+              <td><strong>viewer</strong></td>
+              <td><code>Boolean</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá ativar o modo visualização de relatório. Por padrão o valor é falso.</td>
+            </tr>
+            <tr>
+              <td><strong>on-save</strong></td>
+              <td><code>Function</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter uma função que será chamada quando for salvo o relatório. Exemplo de utilização: <code>on-save="alertaSalvo($value)"</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>databases</strong></td>
+              <td><code>Object</code></td>
+              <td>Não</td>
+              <td>Atributo opcional que irá conter um objeto do tipo string que conterá os bancos de dados suportados pelo componente. Por padrão o valor é: <i>'postgresql,mysql,oracle'</i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Provider de configurações: <i>$gumgaReportProvider</i>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Parâmetro</th>
+                    <th>Tipo</th>
+                    <th>Requerido</th>
+                    <th>Descrição</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><strong>$gumgaReportProvider.setAPILocation({apiLocation:api})</strong></td>
+                    <td><code>Object</code></td>
+                    <td>Não</td>
+                    <td>
+                        Configure uma localização padrão de sua API. Se você utiliza o padrão de rotas fornecidos pelo módulo Report do Framework backend,
+                        é possível configurar apenas onde está localizada a mesma. ex: <i>$gumgaReportProvider.setAPILocation({apiLocation:'http://localhost'})</i>.
+                        Se desejar, é possível colocar um objeto na <i>Window</i>, onde será buscado a localização da api. O mesmo pode ser feito da seguinte forma:
+                        <pre>
+    <code>
+    window.APILocation = {
+        apiLocation: 'http://localhost/minha-api'
+    }
+    </code></pre>
+                        Entretanto, as conexões do Stimulsoft precisam que seja configurada esta propriedade.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>$gumgaReportProvider.setToken('mytoken')</strong></td>
+                    <td><code>String</code></td>
+                    <td>Não</td>
+                    <td>Configure um token padrão para requisitar relatórios para uma API.</td>
+                </tr>
+                <tr>
+                    <td><strong>$gumgaReportProvider.setLicenseKey(null);</strong></td>
+                    <td><code>String</code></td>
+                    <td>Não</td>
+                    <td>Configure sua licensa do Stimulsoft.</td>
+                </tr>
+                <tr>
+                    <td><strong>$gumgaReportProvider.setLocalizationLang('dist/stimulsoft/langs/pt-BR.xml');</strong></td>
+                    <td><code>String</code></td>
+                    <td>Não</td>
+                    <td>Configure a linguagem (tradução) de sua aplicação</td>
+                </tr>
+                <tr>
+                    <td><strong>$gumgaReportProvider.setUrlReportConnection(api + '/api/genericreport/reportconnection?gumgaToken=mytoken');</strong></td>
+                    <td><code>String</code></td>
+                    <td>Não</td>
+                    <td>Configure a rota onde será feito as consultas de seus relatórios.</td>
+                </tr>
+                <tr>
+                    <td><strong>$gumgaReportProvider.setUrlGumgaReport(api + '/api/gumgareport?gumgaToken=mytoken');</strong></td>
+                    <td><code>String</code></td>
+                    <td>Não</td>
+                    <td>Configure a rota que será salvo seus relatórios.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Utilizando parâmetros específicos
+            </div>
+            <div class="panel-body">
+                <h5>Se você utiliza o módulo ou serviço gumga-report no backend, é possível utilizar parâmetros específicos como id da organização, usuário logado, entre outros, na criação dos data sources.</h5>
+                <h5>Para aprender a utilizar o serviço ou módulo gumga-report <a href="https://gumga.github.io/#/app/gumga-report/2.0.2"> clique aqui </a></h5>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Parâmetro</th>
+                        <th>Exemplo de utilização</th>
+                        <th>Descrição</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><strong>[[oi]]</strong></td>
+                        <td><code>select * from tabela where oi = [[oi]]</code></td>
+                        <td>Filtre seus registros de acordo com o id da organização do usuário logado.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>[[login]]</strong></td>
+                        <td><code>select * from pessoa where email = [[login]]</code></td>
+                        <td>Filtre seus registros de acordo com o e-mail do usuário logado.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>[[gumgaToken]]</strong></td>
+                        <td><code>select * from historicodetokens where token = [[gumgaToken]]</code></td>
+                        <td>Filtre seus registros de acordo com o token do usuário logado.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>[[ip]]</strong></td>
+                        <td><code>select * from tabela where ip = [[ip]]</code></td>
+                        <td>Filtre seus registros de acordo com o ip do usuário logado.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>[[organization]]</strong></td>
+                        <td><code>select * from empresas where descricao = [[organization]]</code></td>
+                        <td>Filtre seus registros de acordo com a organização do usuário logado.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>[[instanceOi]]</strong></td>
+                        <td><code>select * from tabela where instanceOi = [[instanceOi]]</code></td>
+                        <td>Filtre seus registros de acordo com o oi da instância do usuário logado.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>[[softwareName]]</strong></td>
+                        <td><code>select * from softwares where softwareName = [[softwareName]]</code></td>
+                        <td>Filtre seus registros de acordo com software do usuário logado.</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <h5>Abaixo é possível visualizar algumas imagens com exemplos da utilização destes parâmetros.</h5>
+
+                <div>
+                    <div class="row" id="img-report-1">
+                        <div class="col-lg-12">
+                            <img src="./img/filter_oi.png" alt="filter oi" class="img-report">
+                        </div>
+                        <div class="col-lg-12" id="img-report-2">
+                        <br>
+                            <img src="./img/new_connection.png" alt="new connection" class="img-report">
+                        </div>
+                        <div class="col-lg-12" id="img-report-3">
+                        <br>
+                            <img src="./img/oi.png" alt="oi" class="img-report">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>
+
+    <script src="dist/stimulsoft/js/stimulsoft.reports.pack.js"></script>
+	<script src="dist/stimulsoft/js/stimulsoft.viewer.pack.js"></script>
+	<script src="dist/stimulsoft/js/stimulsoft.designer.pack.js"></script>
+
+	<link rel="stylesheet" href="dist/stimulsoft/css/stimulsoft.designer.office2013.darkgrayteal.css">
+	<link rel="stylesheet" href="dist/stimulsoft/css/stimulsoft.viewer.office2013.darkgrayteal.css">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <script src="dist/gumga-report-ng.min.js"></script>
+    <script src="https://unpkg.com/gumga-controller-ng@1.1.5/dist/gumga-controller.min.js"></script>
+    <script src="https://unpkg.com/gumga-rest-ng@1.1.5/dist/gumga-rest.min.js"></script>
+
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="https://gumga.github.io/components/app.js"></script>
+
+  </body>
+</html>
+
+
+<!--<dependency>
+    <groupId>io.gumga</groupId>
+    <artifactId>gumga-reports</artifactId>
+    <version>1.5.20-SNAPSHOT</version>
+</dependency>-->
+
+<!--jdbc:mysql://localhost:3306/security?zeroDateTimeBehavior=convertToNull; user = root; password = senha;-->
