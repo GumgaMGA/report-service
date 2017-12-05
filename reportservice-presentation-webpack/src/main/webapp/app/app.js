@@ -114,7 +114,7 @@ angular.module('app.core', [
         .state('gumgareport', {
         data: {
             id: 1
-        }, 
+        },
             url: '/gumgareport',
             templateUrl: tempĺateBase
         })
@@ -131,6 +131,9 @@ angular.module('app.core', [
       return {
         'request': function (config) {
           config.headers['gumgaToken'] = window.sessionStorage.getItem('user') ? JSON.parse(window.sessionStorage.getItem('user')).token : 0
+            // if (config.url.match("\.[a-zA-Z-]+\.json") != null) {
+            //     config.url = (location.origin.includes('localhost')) ? config.url :  location.origin + "/reportservice/i18n/pt-br.json";
+            // }
           handlingLoading($injector, $timeout);
           return config
         },

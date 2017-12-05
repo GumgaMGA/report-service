@@ -46,7 +46,7 @@
     "gumga-query-filter-ng": "^1.2.0",
     "gumga-report-ng": "^1.2.1",
     "gumga-rest-ng": "^1.1.5",
-    "gumga-translate-ng": "^1.1.4",
+    "gumga-translate-ng": "1.1.4",
     "gumga-upload-ng": "^1.0.2",
     "gumga-web-storage-ng": "^1.1.0",
     "jquery": "^3.2.1",

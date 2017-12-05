@@ -33,7 +33,7 @@ const LoginService = ($http) => {
     }
 
     Service.listOrganizations = (token) => {
-        return $http.get(publicApi + '/organizations/' + token + '/');
+        return $http.get(publicApi + '/organizations/' + token);
     }
 
     Service.changeOrganization = (token, organizationId) => {

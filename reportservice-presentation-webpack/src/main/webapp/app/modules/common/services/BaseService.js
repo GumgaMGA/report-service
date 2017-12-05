@@ -13,7 +13,7 @@ const BaseService = ($http, GumgaRest, $q) => {
         var usr = JSON.parse(sessionStorage.getItem('user'))
         if(usr && usr.token) {
             var token = usr.token
-            return $http.get(APILocation.apiLocation + '/public/token/organizations/' + token + '/')
+            return $http.get(APILocation.apiLocation + '/public/token/organizations/' + token)
         }
         return $q(function(resolve) {
             resolve('Não tem usuario na session storage')
